@@ -19,7 +19,6 @@ class SubbaseServiceProvider extends PackageServiceProvider
             ->name('subbase')
             ->hasConfigFile('subbase')
             ->hasTranslations()
-            ->hasMigration('add_prices_to_plans_table')
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->startWith(function (Command $artisanCommand): void {
@@ -30,7 +29,8 @@ class SubbaseServiceProvider extends PackageServiceProvider
                     ->publishConfigFile()
                     ->publishMigrations()
                     ->askToStarRepoOnGitHub('nafiswatsiq/subbase');
-            });
+            })
+            ->hasMigration('add_prices_to_plans_table');
     }
 
     public function packageBooted(): void
