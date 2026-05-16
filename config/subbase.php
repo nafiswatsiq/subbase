@@ -127,6 +127,12 @@ return [
         'subscription_usage' => 'subscription_usage',
     ],
 
+    'permissions' => [
+        'plan' => null,
+        'subscription' => null,
+        'feature' => null,
+    ],
+
     'models' => [
         'user' => config('auth.providers.users.model', \App\Models\User::class),
         'plan' => Plan::class,

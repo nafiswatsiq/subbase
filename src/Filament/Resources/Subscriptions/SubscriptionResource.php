@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Nafiswatsiq\Subbase\Filament\Resources\Subscriptions;
 
 use Nafiswatsiq\Subbase\Filament\Resources\Subscriptions\Pages\CreateSubscription;
@@ -8,12 +10,14 @@ use Nafiswatsiq\Subbase\Filament\Resources\Subscriptions\Pages\ListSubscriptions
 use Nafiswatsiq\Subbase\Filament\Resources\Subscriptions\Schemas\SubscriptionForm;
 use Nafiswatsiq\Subbase\Filament\Resources\Subscriptions\Tables\SubscriptionsTable;
 use Nafiswatsiq\Subbase\Models\Subscription;
+use Nafiswatsiq\Subbase\Support\SubbasePermission;
 use BackedEnum;
 use Filament\Resources\Resource;
 use Filament\Schemas\Schema;
 use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class SubscriptionResource extends Resource
@@ -23,6 +27,61 @@ class SubscriptionResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFire;
 
     protected static ?int $navigationSort = 2;
+
+    public static function canAccess(): bool
+    {
+        return SubbasePermission::allows(config('subbase.permissions.subscription'));
+    }
+
+    public static function canViewAny(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canCreate(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canEdit(Model $record): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canDelete(Model $record): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canDeleteAny(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canForceDelete(Model $record): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canForceDeleteAny(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canRestore(Model $record): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canRestoreAny(): bool
+    {
+        return static::canAccess();
+    }
+
+    public static function canView(Model $record): bool
+    {
+        return static::canAccess();
+    }
 
     public static function getNavigationLabel(): string
     {

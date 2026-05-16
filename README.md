@@ -1,6 +1,6 @@
 # Subbase - Filament Subscription Management Plugin
 
-Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of `laravelcm/laravel-subscriptions` with multi-currency support and custom model flexibility.
+Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of `laravelcm/laravel-subscriptions` with multi-currency support, optional role/permission support, and custom model flexibility.
 
 ## Features
 
@@ -11,6 +11,7 @@ Advanced subscription management system for Laravel with Filament admin panel in
 - 🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
 - 🎨 **Filament Integration** - Beautiful admin interface with Filament v5
 - ⚙️ **Custom Models** - Use your own models extending base subscription models
+- 🔐 **Optional Role Permission** - Works with `spatie/laravel-permission` when installed, but still works without it
 
 ## Requirements
 
@@ -76,6 +77,23 @@ Edit `config/subbase.php` to customize:
 - Language locale mapping
 - Subscription table names
 - Model bindings (for custom models)
+- Optional permission strings
+
+### Optional Role Permission Integration
+
+If your app installs `spatie/laravel-permission`, you can control access to the plugin with permission names in `config/subbase.php`:
+
+```php
+'permissions' => [
+    'plan' => 'manage subbase plans',
+    'subscription' => 'manage subbase subscriptions',
+    'feature' => 'manage subbase features',
+],
+```
+
+Behavior:
+- If `spatie/laravel-permission` is installed, Filament resource access follows those permission strings.
+- If it is not installed, the plugin remains fully usable and permissions are ignored.
 
 ### Custom Models
 
