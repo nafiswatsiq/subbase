@@ -3,6 +3,7 @@
 namespace Nafiswatsiq\Subbase;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\File;
 use Nafiswatsiq\Subbase\Models\Feature;
 use Nafiswatsiq\Subbase\Models\Plan;
 use Nafiswatsiq\Subbase\Models\Subscription;
@@ -32,16 +33,23 @@ class SubbaseServiceProvider extends PackageServiceProvider
                     })
                     ->publishConfigFile()
                     ->endWith(function (Command $artisanCommand): void {
-                        $artisanCommand->call('vendor:publish', [
-                            '--tag' => 'subbase-migrations',
-                            '--force' => true,
-                        ]);
+                        $sourceMigration = dirname(__DIR__).'/database/migrations/add_prices_to_plans_table.php';
+                        $timestamp = now();
+                        $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_add_prices_to_plans_table.php');
+
+                        while (File::exists($destinationMigration)) {
+                            $timestamp = $timestamp->addSecond();
+                            $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_add_prices_to_plans_table.php');
+                        }
+
+                        File::copy($sourceMigration, $destinationMigration);
+
+                        $artisanCommand->info('Published custom migration: '.basename($destinationMigration));
 
                         $artisanCommand->info('Subbase installation completed.');
                     })
                     ->askToStarRepoOnGitHub('nafiswatsiq/subbase');
-            })
-            ->hasMigration('add_prices_to_plans_table');
+            });
     }
 
     public function packageBooted(): void
