@@ -2,10 +2,12 @@
 
 namespace Nafiswatsiq\Subbase;
 
+use Illuminate\Console\Command;
 use Nafiswatsiq\Subbase\Models\Feature;
 use Nafiswatsiq\Subbase\Models\Plan;
 use Nafiswatsiq\Subbase\Models\Subscription;
 use Nafiswatsiq\Subbase\Models\SubscriptionUsage;
+use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
 
@@ -17,7 +19,18 @@ class SubbaseServiceProvider extends PackageServiceProvider
             ->name('subbase')
             ->hasConfigFile('subbase')
             ->hasTranslations()
-            ->hasMigration('add_prices_to_plans_table');
+            ->hasMigration('add_prices_to_plans_table')
+            ->hasInstallCommand(function (InstallCommand $command): void {
+                $command
+                    ->startWith(function (Command $artisanCommand): void {
+                        $artisanCommand->call('subscriptions:install', [
+                            '--no-interaction' => true,
+                        ]);
+                    })
+                    ->publishConfigFile()
+                    ->publishMigrations()
+                    ->askToStarRepoOnGitHub('nafiswatsiq/subbase');
+            });
     }
 
     public function packageBooted(): void

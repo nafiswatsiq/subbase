@@ -28,12 +28,14 @@ Advanced subscription management system for Laravel with Filament admin panel in
 composer require nafiswatsiq/subbase
 ```
 
-### 2. Publish Assets & Migrations
+### 2. Publish Config & Migrations
 
 ```bash
-php artisan vendor:publish --provider="Nafiswatsiq\Subbase\SubbaseServiceProvider"
+php artisan subbase:install
 php artisan migrate
 ```
+
+This single command runs the upstream `subscriptions:install` first, then publishes the `subbase` config and the `add_prices_to_plans_table` migration.
 
 ### 3. Register Plugin in Filament Panel
 
