@@ -22,12 +22,23 @@ class SubbaseServiceProvider extends PackageServiceProvider
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->startWith(function (Command $artisanCommand): void {
+                        $artisanCommand->info('Installing laravelcm/laravel-subscriptions...');
+
                         $artisanCommand->call('subscriptions:install', [
                             '--no-interaction' => true,
                         ]);
+
+                        $artisanCommand->info('Installing subbase custom migrations...');
                     })
                     ->publishConfigFile()
-                    ->publishMigrations()
+                    ->endWith(function (Command $artisanCommand): void {
+                        $artisanCommand->call('vendor:publish', [
+                            '--tag' => 'subbase-migrations',
+                            '--force' => true,
+                        ]);
+
+                        $artisanCommand->info('Subbase installation completed.');
+                    })
                     ->askToStarRepoOnGitHub('nafiswatsiq/subbase');
             })
             ->hasMigration('add_prices_to_plans_table');
