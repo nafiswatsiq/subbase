@@ -1,6 +1,6 @@
 # Subbase - Filament Subscription Management Plugin
 
-Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of `laravelcm/laravel-subscriptions` with multi-currency support, optional role/permission support, and custom model flexibility.
+Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of [`laravelcm/laravel-subscriptions`](https://github.com/laravelcm/laravel-subscriptions) with multi-currency support, optional role/permission support, and custom model flexibility.
 
 ## Features
 
@@ -35,9 +35,23 @@ php artisan subbase:install
 php artisan migrate
 ```
 
-This single command runs the upstream `subscriptions:install` first, then publishes the `subbase` config and the `add_prices_to_plans_table` migration.
+### 3. Add Subscriptions to User model
 
-### 3. Register Plugin in Filament Panel
+In your User model just use trait like this:
+
+```php
+namespace App\Models;
+
+use Laravelcm\Subscriptions\Traits\HasPlanSubscriptions;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+
+class User extends Authenticatable
+{
+    use HasPlanSubscriptions;
+}
+```
+
+### 4. Register Plugin in Filament Panel
 
 In your `app/Providers/Filament/AdminPanelProvider.php`:
 
@@ -55,7 +69,7 @@ class AdminPanelProvider extends PanelProvider
 }
 ```
 
-### 4. Register Service Provider (optional, auto-discovered)
+### 5. Register Service Provider (optional, auto-discovered)
 
 The service provider is auto-discovered via `composer.json` extra field. If auto-discovery is disabled, add manually in `bootstrap/providers.php`:
 
@@ -111,44 +125,6 @@ Override default models in `config/subbase.php`:
 ```
 
 Ensure your custom models extend the base models from `nafiswatsiq/subbase`.
-
-## Usage
-
-### Create a Plan
-
-```php
-use Nafiswatsiq\Subbase\Models\Plan;
-
-$plan = Plan::create([
-    'name' => ['en' => 'Professional', 'id' => 'Profesional'],
-    'description' => ['en' => 'For professionals', 'id' => 'Untuk profesional'],
-    'prices' => ['USD' => 29.99, 'IDR' => 500000],
-    'currency' => 'USD',
-    'invoice_interval' => 'month',
-    'invoice_period' => 1,
-]);
-```
-
-### Add Features to Plan
-
-```php
-$plan->features()->create([
-    'name' => ['en' => 'API Access', 'id' => 'Akses API'],
-    'description' => ['en' => 'Full API access', 'id' => 'Akses API penuh'],
-    'value' => '1',
-    'resettable_period' => 1,
-    'resettable_interval' => 'month',
-]);
-```
-
-### Subscribe a User
-
-```php
-$user->subscriptions()->create([
-    'plan_id' => $plan->id,
-    'name' => 'my-subscription',
-]);
-```
 
 ## Multi-Language Support
 
