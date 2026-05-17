@@ -110,6 +110,7 @@ If your app installs `spatie/laravel-permission`, you can control access to the 
 Behavior:
 - If `spatie/laravel-permission` is installed, Filament resource access follows those permission strings.
 - If it is not installed, the plugin remains fully usable and permissions are ignored.
+- If the permission value is left empty, Subbase falls back to Shield-style names such as `ViewAny:Plan` and `ViewAny:Subscription` for the built-in resources.
 
 ### Custom Models
 

@@ -144,7 +144,6 @@ return [
     'permissions' => [
         'plan' => null,
         'subscription' => null,
-        'feature' => null,
     ],
 
     'models' => [

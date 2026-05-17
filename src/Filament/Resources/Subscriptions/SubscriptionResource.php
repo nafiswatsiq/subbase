@@ -30,57 +30,57 @@ class SubscriptionResource extends Resource
 
     public static function canAccess(): bool
     {
-        return SubbasePermission::allows(config('subbase.permissions.subscription'));
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'viewAny', static::getModel());
     }
 
     public static function canViewAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'viewAny', static::getModel());
     }
 
     public static function canCreate(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'create', static::getModel());
     }
 
     public static function canEdit(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'update', static::getModel());
     }
 
     public static function canDelete(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'delete', static::getModel());
     }
 
     public static function canDeleteAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'deleteAny', static::getModel());
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'forceDelete', static::getModel());
     }
 
     public static function canForceDeleteAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'forceDeleteAny', static::getModel());
     }
 
     public static function canRestore(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'restore', static::getModel());
     }
 
     public static function canRestoreAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'restoreAny', static::getModel());
     }
 
     public static function canView(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'view', static::getModel());
     }
 
     public static function getNavigationLabel(): string

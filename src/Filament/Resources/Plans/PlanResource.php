@@ -31,62 +31,62 @@ class PlanResource extends Resource
 
     public static function canAccess(): bool
     {
-        return SubbasePermission::allows(config('subbase.permissions.plan'));
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'viewAny', static::getModel());
     }
 
     public static function canViewAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'viewAny', static::getModel());
     }
 
     public static function canCreate(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'create', static::getModel());
     }
 
     public static function canEdit(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'update', static::getModel());
     }
 
     public static function canDelete(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'delete', static::getModel());
     }
 
     public static function canDeleteAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'deleteAny', static::getModel());
     }
 
     public static function canForceDelete(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'forceDelete', static::getModel());
     }
 
     public static function canForceDeleteAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'forceDeleteAny', static::getModel());
     }
 
     public static function canRestore(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'restore', static::getModel());
     }
 
     public static function canRestoreAny(): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'restoreAny', static::getModel());
     }
 
     public static function canReplicate(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'replicate', static::getModel());
     }
 
     public static function canView(Model $record): bool
     {
-        return static::canAccess();
+        return SubbasePermission::allows(config('subbase.permissions.plan'), 'view', static::getModel());
     }
 
     public static function getNavigationLabel(): string
@@ -116,9 +116,9 @@ class PlanResource extends Resource
 
     public static function getRelations(): array
     {
-        return SubbasePermission::allows(config('subbase.permissions.feature'))
-            ? [FeaturesRelationManager::class]
-            : [];
+        return [
+            FeaturesRelationManager::class,
+        ];
     }
 
     public static function getPages(): array
