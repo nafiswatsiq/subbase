@@ -8,60 +8,74 @@ use Nafiswatsiq\Subbase\Models\Subscription;
 use Nafiswatsiq\Subbase\Models\SubscriptionUsage;
 
 return [
+
+    /*
+    |--------------------------------------------------------------------------
+    | Locale Currency Mapping
+    |--------------------------------------------------------------------------
+    |
+    | Configure locale to currency mapping for multi-language plan prices.
+    | Key can be locale code (en, id, ms, en-US) and value must be
+    | ISO 4217 currency code.
+    |
+    */
+
     'default_currency' => 'USD',
 
     'locale_currency_map' => [
-        'id' => 'IDR',
-        'ms' => 'MYR',
-        'my' => 'MYR',
-        'sg' => 'SGD',
-        'th' => 'THB',
-        'ph' => 'PHP',
-        'tl' => 'PHP',
-        'vn' => 'VND',
-        'vi' => 'VND',
-        'en' => 'USD',
-        'us' => 'USD',
-        'gb' => 'GBP',
-        'uk' => 'GBP',
-        'ca' => 'CAD',
-        'au' => 'AUD',
-        'nz' => 'NZD',
-        'ja' => 'JPY',
-        'jp' => 'JPY',
-        'ko' => 'KRW',
-        'kr' => 'KRW',
-        'zh' => 'CNY',
-        'cn' => 'CNY',
-        'tw' => 'TWD',
-        'hk' => 'HKD',
-        'in' => 'INR',
-        'hi' => 'INR',
-        'bn' => 'BDT',
-        'de' => 'EUR',
-        'fr' => 'EUR',
-        'it' => 'EUR',
-        'es' => 'EUR',
-        'nl' => 'EUR',
-        'fi' => 'EUR',
-        'el' => 'EUR',
-        'ch' => 'CHF',
-        'ru' => 'RUB',
-        'pl' => 'PLN',
-        'sv' => 'SEK',
-        'da' => 'DKK',
-        'no' => 'NOK',
-        'cs' => 'CZK',
-        'hu' => 'HUF',
-        'tr' => 'TRY',
-        'ar' => 'SAR',
-        'sa' => 'SAR',
-        'ae' => 'AED',
-        'za' => 'ZAR',
-        'pt' => 'BRL',
-        'br' => 'BRL',
-        'mx' => 'MXN',
-        'ar_ar' => 'ARS',
+        'af' => 'ZAR', // Afrikaans (South Africa)
+        'ar' => 'SAR', // Arabic (Saudi Arabia)
+        'az' => 'AZN', // Azerbaijani (Azerbaijan)
+        'be' => 'BYN', // Belarusian (Belarus)
+        'bg' => 'BGN', // Bulgarian (Bulgaria)
+        'bn' => 'BDT', // Bengali (Bangladesh)
+        'bs' => 'BAM', // Bosnian (Bosnia and Herzegovina)
+        'ca' => 'EUR', // Catalan (Spain/Andorra)
+        'cs' => 'CZK', // Czech (Czech Republic)
+        'da' => 'DKK', // Danish (Denmark)
+        'de' => 'EUR', // German (Germany)
+        'el' => 'EUR', // Greek (Greece)
+        'en' => 'USD', // English (United States)
+        'es' => 'EUR', // Spanish (Spain)
+        'et' => 'EUR', // Estonian (Estonia)
+        'fa' => 'IRR', // Persian (Iran)
+        'fi' => 'EUR', // Finnish (Finland)
+        'fr' => 'EUR', // French (France)
+        'he' => 'ILS', // Hebrew (Israel)
+        'hi' => 'INR', // Hindi (India)
+        'hr' => 'EUR', // Croatian (Croatia)
+        'hu' => 'HUF', // Hungarian (Hungary)
+        'hy' => 'AMD', // Armenian (Armenia)
+        'id' => 'IDR', // Indonesian (Indonesia)
+        'is' => 'ISK', // Icelandic (Iceland)
+        'it' => 'EUR', // Italian (Italy)
+        'ja' => 'JPY', // Japanese (Japan)
+        'ka' => 'GEL', // Georgian (Georgia)
+        'kk' => 'KZT', // Kazakh (Kazakhstan)
+        'ko' => 'KRW', // Korean (South Korea)
+        'lt' => 'EUR', // Lithuanian (Lithuania)
+        'lv' => 'EUR', // Latvian (Latvia)
+        'mk' => 'MKD', // Macedonian (North Macedonia)
+        'ms' => 'MYR', // Malay (Malaysia)
+        'nb' => 'NOK', // Norwegian Bokmål (Norway)
+        'nl' => 'EUR', // Dutch (Netherlands)
+        'nn' => 'NOK', // Norwegian Nynorsk (Norway)
+        'pl' => 'PLN', // Polish (Poland)
+        'pt' => 'BRL', // Portuguese (Brazil)
+        'ro' => 'RON', // Romanian (Romania)
+        'ru' => 'RUB', // Russian (Russia)
+        'sk' => 'EUR', // Slovak (Slovakia)
+        'sl' => 'EUR', // Slovenian (Slovenia)
+        'sq' => 'ALL', // Albanian (Albania)
+        'sr' => 'RSD', // Serbian (Serbia)
+        'sv' => 'SEK', // Swedish (Sweden)
+        'th' => 'THB', // Thai (Thailand)
+        'tr' => 'TRY', // Turkish (Turkey)
+        'uk' => 'UAH', // Ukrainian (Ukraine) - Fixed from GBP
+        'ur' => 'PKR', // Urdu (Pakistan)
+        'uz' => 'UZS', // Uzbek (Uzbekistan)
+        'vi' => 'VND', // Vietnamese (Vietnam)
+        'zh' => 'CNY', // Chinese (China)
     ],
 
     'language_locale_map' => [
@@ -99,7 +113,7 @@ return [
         'lv' => 'Latvian',
         'mk' => 'Macedonian',
         'ms' => 'Malay',
-        'nb' => 'Norwegian Bokmal',
+        'nb' => 'Norwegian Bokmål',
         'nl' => 'Dutch',
         'nn' => 'Norwegian Nynorsk',
         'pl' => 'Polish',

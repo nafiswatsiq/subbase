@@ -52,7 +52,7 @@ class Feature extends BaseFeature
 
     public static function localeLanguageMap(): array
     {
-        $configMap = config('laravel-subscriptions.language_locale_map', []);
+        $configMap = config('subbase.language_locale_map', []);
         $normalized = [];
 
         foreach ((array) $configMap as $locale => $language) {

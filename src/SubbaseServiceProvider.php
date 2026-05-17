@@ -55,14 +55,14 @@ class SubbaseServiceProvider extends PackageServiceProvider
     public function packageBooted(): void
     {
         config([
-            'laravel-subscriptions.default_currency' => config('subbase.default_currency', config('laravel-subscriptions.default_currency', 'USD')),
-            'laravel-subscriptions.locale_currency_map' => config('subbase.locale_currency_map', config('laravel-subscriptions.locale_currency_map', [])),
-            'laravel-subscriptions.language_locale_map' => config('subbase.language_locale_map', config('laravel-subscriptions.language_locale_map', [])),
+            'laravel-subscriptions.default_currency' => config('subbase.default_currency', 'USD'),
+            'laravel-subscriptions.locale_currency_map' => config('subbase.locale_currency_map', []),
+            'laravel-subscriptions.language_locale_map' => config('subbase.language_locale_map', []),
 
-            'laravel-subscriptions.tables.plans' => config('subbase.tables.plans', config('laravel-subscriptions.tables.plans', 'plans')),
-            'laravel-subscriptions.tables.features' => config('subbase.tables.features', config('laravel-subscriptions.tables.features', 'features')),
-            'laravel-subscriptions.tables.subscriptions' => config('subbase.tables.subscriptions', config('laravel-subscriptions.tables.subscriptions', 'subscriptions')),
-            'laravel-subscriptions.tables.subscription_usage' => config('subbase.tables.subscription_usage', config('laravel-subscriptions.tables.subscription_usage', 'subscription_usage')),
+            'laravel-subscriptions.tables.plans' => config('subbase.tables.plans', 'plans'),
+            'laravel-subscriptions.tables.features' => config('subbase.tables.features', 'features'),
+            'laravel-subscriptions.tables.subscriptions' => config('subbase.tables.subscriptions', 'subscriptions'),
+            'laravel-subscriptions.tables.subscription_usage' => config('subbase.tables.subscription_usage', 'subscription_usage'),
 
             'laravel-subscriptions.models.plan' => config('subbase.models.plan', Plan::class),
             'laravel-subscriptions.models.feature' => config('subbase.models.feature', Feature::class),

@@ -245,7 +245,7 @@ class Plan extends BasePlan
 
     public static function localeCurrencyMap(): array
     {
-        $configMap = config('laravel-subscriptions.locale_currency_map', []);
+        $configMap = config('subbase.locale_currency_map', []);
         $normalized = [];
 
         foreach ((array) $configMap as $locale => $currency) {
@@ -408,14 +408,14 @@ class Plan extends BasePlan
 
     protected static function defaultCurrency(): string
     {
-        $defaultCurrency = strtoupper(trim((string) config('laravel-subscriptions.default_currency', 'USD')));
+        $defaultCurrency = strtoupper(trim((string) config('subbase.default_currency', 'USD')));
 
         return $defaultCurrency !== '' ? $defaultCurrency : 'USD';
     }
 
     public static function localeLanguageMap(): array
     {
-        $configMap = config('laravel-subscriptions.language_locale_map', []);
+        $configMap = config('subbase.language_locale_map', []);
         $normalized = [];
 
         foreach ((array) $configMap as $locale => $language) {
