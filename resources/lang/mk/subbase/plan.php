@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Пробен интервал',
     'grace_interval' => 'Грејс интервал',
     'is_active' => 'Е активен',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Јазик',

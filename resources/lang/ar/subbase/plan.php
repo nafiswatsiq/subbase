@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'الفترة التجريبية',
     'grace_interval' => 'فترة السماح',
     'is_active' => 'نشط',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'اللغة',

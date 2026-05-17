@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Сынақ аралығы',
     'grace_interval' => 'Жеңілдік аралығы',
     'is_active' => 'Белсенді',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Тіл',

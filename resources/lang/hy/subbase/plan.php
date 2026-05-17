@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Փորձարկման ընդմիջում',
     'grace_interval' => 'Շնորհքի ընդմիջում',
     'is_active' => 'Ակտիվ է',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Լեզու',

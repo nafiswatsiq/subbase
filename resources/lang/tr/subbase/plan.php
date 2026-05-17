@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Deneme Aralığı',
     'grace_interval' => 'Ek Süre Aralığı',
     'is_active' => 'Aktif',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Dil',

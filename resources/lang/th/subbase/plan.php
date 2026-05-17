@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'ช่วงเวลาทดลองใช้',
     'grace_interval' => 'ช่วงผ่อนผัน',
     'is_active' => 'ใช้งานอยู่',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'ภาษา',

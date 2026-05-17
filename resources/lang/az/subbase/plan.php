@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Sınaq İntervalı',
     'grace_interval' => 'Güzəşt İntervalı',
     'is_active' => 'Aktivdir',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Dil',

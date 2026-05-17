@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Izmēģinājuma intervāls',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'Ir aktīvs',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Valoda',

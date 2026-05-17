@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Sinov oralig\'i',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'Faol',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Til',

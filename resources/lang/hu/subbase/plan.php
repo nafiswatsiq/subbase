@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Próbaidőköz',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'Aktív',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Nyelv',

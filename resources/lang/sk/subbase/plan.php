@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Skúšobný interval',
     'grace_interval' => 'Interval odkladu',
     'is_active' => 'Je aktívny',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Jazyk',

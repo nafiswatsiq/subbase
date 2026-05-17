@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Пробний інтервал',
     'grace_interval' => 'Інтервал відстрочки',
     'is_active' => 'Активний',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Мова',

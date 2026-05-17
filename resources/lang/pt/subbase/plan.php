@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Intervalo de teste',
     'grace_interval' => 'Intervalo de carência',
     'is_active' => 'Está ativo',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Idioma',

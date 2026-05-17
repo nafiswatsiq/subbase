@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'آزمائشی وقفہ',
     'grace_interval' => 'فضل وقفہ',
     'is_active' => 'ایکٹو ہے۔',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'زبان',

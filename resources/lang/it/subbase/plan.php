@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Intervallo di prova',
     'grace_interval' => 'Intervallo di grazia',
     'is_active' => 'È attivo',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Lingua',

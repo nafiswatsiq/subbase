@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'فاصله آزمایشی',
     'grace_interval' => 'فاصله گریس',
     'is_active' => 'فعال است',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'زبان',

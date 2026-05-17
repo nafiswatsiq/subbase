@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Prooviperioodi intervall',
     'grace_interval' => 'Amapäevade intervall',
     'is_active' => 'On aktiivne',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Keel',

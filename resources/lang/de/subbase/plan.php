@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Testzeitraumintervall',
     'grace_interval' => 'Schonfristintervall',
     'is_active' => 'Ist aktiv',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Sprache',

@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Selang Percubaan',
     'grace_interval' => 'Selang Grace',
     'is_active' => 'Aktif',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Bahasa',

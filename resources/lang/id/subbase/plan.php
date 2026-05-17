@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Interval Uji Coba',
     'grace_interval' => 'Masa Tenggang',
     'is_active' => 'Aktif',
+    'featured' => 'Unggulan',
 
     // Form Fields
     'language' => 'Bahasa',

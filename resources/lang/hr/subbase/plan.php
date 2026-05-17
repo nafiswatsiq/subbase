@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Interval probe',
     'grace_interval' => 'Grace interval',
     'is_active' => 'Je aktivan',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Jezik',

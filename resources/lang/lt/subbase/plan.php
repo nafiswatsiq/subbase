@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Bandomasis intervalas',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'Yra aktyvus',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Kalba',

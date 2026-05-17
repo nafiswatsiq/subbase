@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Khoảng thời gian dùng thử',
     'grace_interval' => 'Khoảng thời gian ân hạn',
     'is_active' => 'Đang hoạt động',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Ngôn ngữ',

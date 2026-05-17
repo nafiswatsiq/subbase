@@ -15,6 +15,7 @@ class Plan extends BasePlan
         'name',
         'description',
         'is_active',
+        'featured',
         'price',
         'signup_fee',
         'currency',
@@ -34,6 +35,7 @@ class Plan extends BasePlan
 
     protected $casts = [
         'is_active' => 'boolean',
+        'featured' => 'boolean',
         'price' => 'float',
         'signup_fee' => 'float',
         'prices' => 'array',

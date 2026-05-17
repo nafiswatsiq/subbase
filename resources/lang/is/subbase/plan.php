@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Prufubil',
     'grace_interval' => 'Náðarbil',
     'is_active' => 'Er virk',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Tungumál',

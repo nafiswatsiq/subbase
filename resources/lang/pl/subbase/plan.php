@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Okres próbny',
     'grace_interval' => 'Przerwa łaski',
     'is_active' => 'Jest aktywny',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Język',

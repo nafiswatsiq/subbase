@@ -33,18 +33,38 @@ class SubbaseServiceProvider extends PackageServiceProvider
                     })
                     ->publishConfigFile()
                     ->endWith(function (Command $artisanCommand): void {
-                        $sourceMigration = dirname(__DIR__).'/database/migrations/add_prices_to_plans_table.php';
-                        $timestamp = now();
-                        $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_add_prices_to_plans_table.php');
+                        $migrations = [
+                            'add_prices_to_plans_table.php',
+                            'add_featured_to_plans_table.php',
+                        ];
 
-                        while (File::exists($destinationMigration)) {
-                            $timestamp = $timestamp->addSecond();
-                            $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_add_prices_to_plans_table.php');
+                        foreach ($migrations as $migration) {
+                            $sourceMigration = dirname(__DIR__).'/database/migrations/'.$migration;
+
+                            if (! File::exists($sourceMigration)) {
+                                $artisanCommand->warn('Skipping missing migration: '.$migration);
+
+                                continue;
+                            }
+
+                            if (! empty(File::glob(database_path('migrations/*_'.$migration)))) {
+                                $artisanCommand->warn('Skipping already published migration: '.$migration);
+
+                                continue;
+                            }
+
+                            $timestamp = now();
+                            $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_'.$migration);
+
+                            while (File::exists($destinationMigration)) {
+                                $timestamp = $timestamp->addSecond();
+                                $destinationMigration = database_path('migrations/'.$timestamp->format('Y_m_d_His').'_'.$migration);
+                            }
+
+                            File::copy($sourceMigration, $destinationMigration);
+
+                            $artisanCommand->info('Published custom migration: '.basename($destinationMigration));
                         }
-
-                        File::copy($sourceMigration, $destinationMigration);
-
-                        $artisanCommand->info('Published custom migration: '.basename($destinationMigration));
 
                         $artisanCommand->info('Subbase installation completed.');
                     })

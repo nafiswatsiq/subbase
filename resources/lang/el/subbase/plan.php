@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Διάστημα Δοκιμαστικής Περιόδου',
     'grace_interval' => 'Διάστημα Περιόδου Χάριτος',
     'is_active' => 'Είναι Ενεργό',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Γλώσσα',

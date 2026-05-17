@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'ট্রায়ালের ব্যবধান',
     'grace_interval' => 'গ্রেস পিরিয়ডের ব্যবধান',
     'is_active' => 'সক্রিয় আছে',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'ভাষা',

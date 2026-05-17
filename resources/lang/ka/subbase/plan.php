@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'საცდელი ინტერვალი',
     'grace_interval' => 'საშეღავათო ინტერვალი',
     'is_active' => 'აქტიურია',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'ენა',

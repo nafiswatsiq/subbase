@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Proefinterval',
     'grace_interval' => 'Grace-interval',
     'is_active' => 'Is actief',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Taal',

@@ -48,6 +48,8 @@ class PlansTable
                     ->label(__('subbase::subbase/plan.grace_interval')),
                 ToggleColumn::make('is_active')
                     ->label(__('subbase::subbase/plan.is_active')),
+                ToggleColumn::make('featured')
+                    ->label(__('subbase::subbase/plan.featured')),
             ])
             ->reorderable('sort_order')
             ->defaultSort('sort_order')

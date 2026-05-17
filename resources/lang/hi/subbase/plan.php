@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'परीक्षण अंतराल',
     'grace_interval' => 'अनुग्रह अंतराल',
     'is_active' => 'सक्रिय है',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'भाषा',

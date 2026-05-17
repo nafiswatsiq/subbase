@@ -27,6 +27,7 @@ return [
     'trial_interval' => '평가판 간격',
     'grace_interval' => '유예 간격',
     'is_active' => '활성 상태',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => '언어',

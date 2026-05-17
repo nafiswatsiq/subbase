@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'מרווח ניסיון',
     'grace_interval' => 'מרווח חסד',
     'is_active' => 'האם פעיל',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'שפה',

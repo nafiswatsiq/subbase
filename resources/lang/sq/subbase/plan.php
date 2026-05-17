@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Intervali i provës',
     'grace_interval' => 'Intervali i hirit',
     'is_active' => 'Është aktiv',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Gjuha',

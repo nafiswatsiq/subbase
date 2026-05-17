@@ -27,6 +27,7 @@ return [
     'trial_interval' => '試用間隔',
     'grace_interval' => '猶予期間',
     'is_active' => 'アクティブです',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => '言語',

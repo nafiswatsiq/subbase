@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Proeftydperk-interval',
     'grace_interval' => 'Grasietydperk-interval',
     'is_active' => 'Is Aktief',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Taal',

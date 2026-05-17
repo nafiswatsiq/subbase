@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Kokeiluväli',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'On aktiivinen',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Kieli',

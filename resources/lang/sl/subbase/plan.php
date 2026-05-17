@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Preskusni interval',
     'grace_interval' => 'Grace Interval',
     'is_active' => 'Je aktiven',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Jezik',

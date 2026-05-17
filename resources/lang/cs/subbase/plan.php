@@ -28,6 +28,7 @@ return [
     'trial_interval' => 'Prøveperiodeinterval',
     'grace_interval' => 'Respitperiodeinterval',
     'is_active' => 'Er aktiv',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Sprog',

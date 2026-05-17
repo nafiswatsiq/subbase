@@ -27,6 +27,7 @@ return [
     'trial_interval' => 'Interval de încercare',
     'grace_interval' => 'Interval de grație',
     'is_active' => 'Este activ',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => 'Limba',

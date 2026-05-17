@@ -27,6 +27,7 @@ return [
     'trial_interval' => '试用间隔',
     'grace_interval' => '宽限期',
     'is_active' => '处于活动状态',
+    'featured' => 'Featured',
 
     // Form Fields
     'language' => '语言',
