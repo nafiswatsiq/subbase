@@ -20,6 +20,7 @@ class SubbaseServiceProvider extends PackageServiceProvider
             ->name('subbase')
             ->hasConfigFile('subbase')
             ->hasTranslations()
+            ->hasViews()
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->startWith(function (Command $artisanCommand): void {

@@ -42,6 +42,14 @@ class Plan extends BasePlan
         'deleted_at' => 'datetime',
     ];
 
+    /**
+     * Scope a query to only include active plans.
+     */
+    public function scopeActive($query)
+    {
+        return $query->where('is_active', true);
+    }
+
     public function getPriceForCurrency(?string $currency = null, bool $fallbackToBase = true): float
     {
         $targetCurrency = strtoupper((string) ($currency ?: $this->currency));
@@ -269,12 +277,18 @@ class Plan extends BasePlan
      */
     public static function currencySelectOptions(): array
     {
-        $codes = array_values(array_unique(static::localeCurrencyMap()));
-        sort($codes);
+        $currencyMap = static::localeCurrencyMap();
+        $languageMap = static::localeLanguageMap();
+        
         $options = [];
-        foreach ($codes as $code) {
-            $options[$code] = $code;
+        foreach ($currencyMap as $locale => $code) {
+            if (! isset($options[$code])) {
+                $langName = $languageMap[$locale] ?? strtoupper($locale);
+                $options[$code] = $code . ' - ' . $langName;
+            }
         }
+
+        ksort($options);
 
         return $options;
     }

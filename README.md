@@ -137,6 +137,89 @@ Override default models in `config/subbase.php`:
 
 Ensure your custom models extend the base models from `nafiswatsiq/subbase`.
 
+## Core Subscription Usage
+
+Subbase uses `laravelcm/laravel-subscriptions` under the hood to handle all core subscription logic (subscribing, canceling, checking features, swapping plans, etc.).
+
+For complete documentation on how to use the underlying subscription methods on your User model, please refer to the official repository:
+👉 [laravelcm/laravel-subscriptions on GitHub](https://github.com/laravelcm/laravel-subscriptions)
+
+## New Subbase Features
+
+Subbase adds several powerful features on top of the base package:
+
+### 1. Multi-Currency Pricing
+Plans in Subbase can store prices for multiple currencies natively. Use the built-in Filament panel to set prices for `USD`, `EUR`, `IDR`, etc. The pricing component will automatically display the correct currency based on your `subbase.php` locale mappings.
+
+**Usage Examples:**
+```php
+use Nafiswatsiq\Subbase\Models\Plan;
+
+$plan = Plan::first();
+
+// Retrieve price for a specific currency
+$priceInUSD = $plan->getPriceForCurrency('USD');
+
+// Retrieve price automatically based on application locale (e.g., 'en-US' mapped to 'USD')
+// Returns the base price if the currency is not set
+$priceForLocale = $plan->getPriceForLocale(app()->getLocale());
+
+// Check if a plan has a price set for a specific currency
+if ($plan->hasCurrencyPrice('EUR')) {
+    // ...
+}
+
+// Get all currencies configured for the plan
+$currencies = $plan->getAvailableCurrencies(); // ['USD', 'IDR', 'EUR']
+
+// Programmatically set a price for a currency
+$plan->setPriceForCurrency('EUR', 15.99)->save();
+```
+
+### 2. Featured Plans
+You can mark specific plans as "Featured" (your most popular plan). 
+To easily retrieve only the featured plans in your application, you can use the `featured` attribute:
+
+```php
+use Nafiswatsiq\Subbase\Models\Plan;
+
+$plan = Plan::active()->first();
+$plan->featured;
+```
+
+## Frontend Components
+
+Subbase includes a modern, reusable Blade component built with Tailwind CSS to display pricing plans on your frontend. 
+
+To use the pricing table in any of your Blade views, simply include the component:
+
+```blade
+<!-- You can also provide a custom route name for the subscribe button -->
+<x-subbase::plan-list subscribe-route="your.custom.checkout.route" />
+
+// Example Route
+Route::get('subscribe/{plan}', function ($plan) {
+    dd($plan);
+})->name('your.custom.checkout.route');
+```
+
+### Component Features
+- Automatically fetches active plans and features sorted by `sort_order`.
+- Displays the most popular (featured) plan prominently.
+- Formats prices correctly based on the current application locale and currencies.
+- Translatable using Laravel's built-in localization.
+- Responsive design tailored for modern web applications.
+- Built-in tabs for filtering plans by invoice interval (monthly, yearly, etc).
+- **Customizable Action Route**: Pass `subscribe-route` prop to direct users to your custom checkout flow.
+
+### Publishing the Component
+If you need to customize the look and feel of the pricing table, you can publish the view file to your application. This will copy the Blade file to `resources/views/vendor/subbase/components/plan-list.blade.php`.
+
+Run the following command:
+```bash
+php artisan vendor:publish --tag="subbase-views"
+```
+
 ## Multi-Language Support
 
 Translations are organized in `resources/lang/{locale}/subbase/`:

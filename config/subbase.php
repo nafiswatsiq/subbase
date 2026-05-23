@@ -36,11 +36,21 @@ return [
         'de' => 'EUR', // German (Germany)
         'el' => 'EUR', // Greek (Greece)
         'en' => 'USD', // English (United States)
+        'en-US' => 'USD', // English (United States)
+        'en-GB' => 'GBP', // English (United Kingdom)
+        'en-AU' => 'AUD', // English (Australia)
+        'en-CA' => 'CAD', // English (Canada)
+        'en-IN' => 'INR', // English (India)
+        'en-NZ' => 'NZD', // English (New Zealand)
         'es' => 'EUR', // Spanish (Spain)
+        'es-ES' => 'EUR', // Spanish (Spain)
+        'es-MX' => 'MXN', // Spanish (Mexico)
         'et' => 'EUR', // Estonian (Estonia)
         'fa' => 'IRR', // Persian (Iran)
         'fi' => 'EUR', // Finnish (Finland)
         'fr' => 'EUR', // French (France)
+        'fr-FR' => 'EUR', // French (France)
+        'fr-CA' => 'CAD', // French (Canada)
         'he' => 'ILS', // Hebrew (Israel)
         'hi' => 'INR', // Hindi (India)
         'hr' => 'EUR', // Croatian (Croatia)
@@ -62,6 +72,8 @@ return [
         'nn' => 'NOK', // Norwegian Nynorsk (Norway)
         'pl' => 'PLN', // Polish (Poland)
         'pt' => 'BRL', // Portuguese (Brazil)
+        'pt-BR' => 'BRL', // Portuguese (Brazil)
+        'pt-PT' => 'EUR', // Portuguese (Portugal)
         'ro' => 'RON', // Romanian (Romania)
         'ru' => 'RUB', // Russian (Russia)
         'sk' => 'EUR', // Slovak (Slovakia)
@@ -76,6 +88,8 @@ return [
         'uz' => 'UZS', // Uzbek (Uzbekistan)
         'vi' => 'VND', // Vietnamese (Vietnam)
         'zh' => 'CNY', // Chinese (China)
+        'zh-CN' => 'CNY', // Chinese (China)
+        'zh-TW' => 'TWD', // Chinese (Taiwan)
     ],
 
     'language_locale_map' => [
@@ -92,11 +106,21 @@ return [
         'de' => 'German',
         'el' => 'Greek',
         'en' => 'English',
+        'en-US' => 'English (United States)',
+        'en-GB' => 'English (United Kingdom)',
+        'en-AU' => 'English (Australia)',
+        'en-CA' => 'English (Canada)',
+        'en-IN' => 'English (India)',
+        'en-NZ' => 'English (New Zealand)',
         'es' => 'Spanish',
+        'es-ES' => 'Spanish (Spain)',
+        'es-MX' => 'Spanish (Mexico)',
         'et' => 'Estonian',
         'fa' => 'Persian',
         'fi' => 'Finnish',
         'fr' => 'French',
+        'fr-FR' => 'French (France)',
+        'fr-CA' => 'French (Canada)',
         'he' => 'Hebrew',
         'hi' => 'Hindi',
         'hr' => 'Croatian',
@@ -118,6 +142,8 @@ return [
         'nn' => 'Norwegian Nynorsk',
         'pl' => 'Polish',
         'pt' => 'Portuguese',
+        'pt-BR' => 'Portuguese (Brazil)',
+        'pt-PT' => 'Portuguese (Portugal)',
         'ro' => 'Romanian',
         'ru' => 'Russian',
         'sk' => 'Slovak',
@@ -132,6 +158,8 @@ return [
         'uz' => 'Uzbek',
         'vi' => 'Vietnamese',
         'zh' => 'Chinese',
+        'zh-CN' => 'Chinese (China)',
+        'zh-TW' => 'Chinese (Taiwan)',
     ],
 
     'tables' => [
