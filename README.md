@@ -196,7 +196,8 @@ To use the pricing table in any of your Blade views, simply include the componen
 ```blade
 <!-- You can also provide a custom route name for the subscribe button -->
 <x-subbase::plan-list subscribe-route="your.custom.checkout.route" />
-
+```
+```php
 // Example Route
 Route::get('subscribe/{plan}', function ($plan) {
     dd($plan);
