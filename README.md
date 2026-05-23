@@ -188,6 +188,7 @@ $plan->featured;
 ```
 
 ## Frontend Components
+![Screenshot](./.github/resources/plans-component.png)
 
 Subbase includes a modern, reusable Blade component built with Tailwind CSS to display pricing plans on your frontend. 
 
