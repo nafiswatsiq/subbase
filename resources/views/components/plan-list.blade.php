@@ -22,14 +22,11 @@
 
     {{-- Header --}}
     <div class="text-center mb-12">
-        <p class="text-xs font-semibold tracking-widest text-blue-600 uppercase mb-3">
-            {{ $t('subbase::plan.pricing.label', 'Pricing') }}
-        </p>
-        <h2 class="text-3xl font-bold text-gray-900 tracking-tight">
-            {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
+        <h2 class="text-3xl font-extrabold text-gray-900 sm:text-4xl">
+            {{ $t('subbase::plan.pricing.title', 'Pricing Plans') }}
         </h2>
-        <p class="mt-3 text-base text-gray-500">
-            {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
+        <p class="mt-4 text-xl text-gray-600">
+            {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs.') }}
         </p>
     </div>
 
