@@ -1,4 +1,4 @@
-![header](./.github/resources/banner.png)
+![header](./.github/resources/banner.jpg)
 
 # Subbase - Filament Subscription Management Plugin
 
@@ -6,7 +6,9 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/nafiswatsiq/subbase.svg)](https://packagist.org/packages/nafiswatsiq/subbase)
 
+![Screenshot](./.github/resources/plans.png)
 ![Screenshot](./.github/resources/edit-plan.png)
+![Screenshot](./.github/resources/subscriber.png)
 
 Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of [`laravelcm/laravel-subscriptions`](https://github.com/laravelcm/laravel-subscriptions) with multi-currency support, optional role/permission support, and custom model flexibility.
 
