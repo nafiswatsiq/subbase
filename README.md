@@ -1,4 +1,4 @@
-![header](./.github/resources/banner.jpg)
+<img src="./.github/resources/banner.jpg" alt="header" class="filament-hidden" />
 
 # Subbase - Filament Subscription Management Plugin
 
@@ -6,9 +6,9 @@
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE.md)
 [![Total Downloads](https://img.shields.io/packagist/dt/nafiswatsiq/subbase.svg)](https://packagist.org/packages/nafiswatsiq/subbase)
 
-![Screenshot](./.github/resources/plans.png)
-![Screenshot](./.github/resources/edit-plan.png)
-![Screenshot](./.github/resources/subscriber.png)
+<img src="./.github/resources/plans.png" alt="Screenshot" class="filament-hidden" />
+<img src="./.github/resources/edit-plan.png" alt="Screenshot" class="filament-hidden" />
+<img src="./.github/resources/subscriber.png" alt="Screenshot" class="filament-hidden" />
 
 Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of [`laravelcm/laravel-subscriptions`](https://github.com/laravelcm/laravel-subscriptions) with multi-currency support, optional role/permission support, and custom model flexibility.
 
@@ -188,7 +188,7 @@ $plan->featured;
 ```
 
 ## Frontend Components
-![Screenshot](./.github/resources/plans-component.png)
+<img src="./.github/resources/plans-component.png" alt="Screenshot" class="filament-hidden" />
 
 Subbase includes a modern, reusable Blade component built with Tailwind CSS to display pricing plans on your frontend. 
 
