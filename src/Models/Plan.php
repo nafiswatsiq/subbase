@@ -5,6 +5,7 @@ namespace Nafiswatsiq\Subbase\Models;
 use Nafiswatsiq\Subbase\Models\Concerns\ReplacesTranslatableJsonOnMassAssignment;
 use Illuminate\Support\Str;
 use Laravelcm\Subscriptions\Models\Plan as BasePlan;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Plan extends BasePlan
 {
@@ -204,6 +205,43 @@ class Plan extends BasePlan
 
             $plan->syncBasePriceFromCurrency();
         });
+    }
+
+    /**
+     * Get the discounts associated with this plan.
+     */
+    public function discounts(): BelongsToMany
+    {
+        return $this->belongsToMany(Discount::class);
+    }
+
+    /**
+     * Get active discounts for this plan, ordered by priority.
+     */
+    public function activeDiscounts()
+    {
+        return $this->discounts()
+            ->where('is_active', true)
+            ->where(function ($query) {
+                $query->whereNull('starts_at')
+                    ->orWhere('starts_at', '<=', now());
+            })
+            ->where(function ($query) {
+                $query->whereNull('expires_at')
+                    ->orWhere('expires_at', '>=', now());
+            })
+            ->orderByDesc('priority');
+    }
+
+    /**
+     * Get the best applicable discount for this plan based on price.
+     */
+    public function getBestDiscount(float $amount, string $currency): ?Discount
+    {
+        return $this->activeDiscounts()
+            ->get()
+            ->filter(fn (Discount $discount): bool => $discount->calculateDiscount($amount, $currency) < $amount)
+            ->first();
     }
 
     protected function normalizedPrices(): array

@@ -42,4 +42,48 @@ class PlanPriceHelper
 
         return $result;
     }
+
+    public static function resolveWithDiscounts(Plan $plan, ?string $currency = null, bool $fallbackToBase = true): array
+    {
+        $originalAmount = static::resolve($plan, $currency, $fallbackToBase);
+        $resolvedCurrency = static::currency($plan, $currency);
+        $bestDiscount = $plan->getBestDiscount($originalAmount, $resolvedCurrency);
+        $finalAmount = $originalAmount;
+
+        if ($bestDiscount) {
+            $finalAmount = $bestDiscount->calculateDiscount($originalAmount, $resolvedCurrency);
+        }
+
+        return [
+            'original_amount' => $originalAmount,
+            'discount_amount' => $originalAmount - $finalAmount,
+            'final_amount' => $finalAmount,
+            'currency' => $resolvedCurrency,
+            'best_discount' => $bestDiscount,
+        ];
+    }
+
+    public static function formatWithDiscounts(Plan $plan, ?string $currency = null, int $decimals = 2): array
+    {
+        $resolved = static::resolveWithDiscounts($plan, $currency);
+        $discount = $resolved['best_discount'];
+
+        $result = [
+            'original_price' => sprintf('%s %s', $resolved['currency'], number_format($resolved['original_amount'], $decimals, '.', ',')),
+            'final_price' => sprintf('%s %s', $resolved['currency'], number_format($resolved['final_amount'], $decimals, '.', ',')),
+            'discount_amount' => sprintf('%s %s', $resolved['currency'], number_format($resolved['discount_amount'], $decimals, '.', ',')),
+            'discount_info' => null,
+        ];
+
+        if ($discount) {
+            $result['discount_info'] = [
+                'code' => $discount->code,
+                'type' => $discount->type,
+                'value' => $discount->value,
+                'formatted_value' => $discount->getFormattedValue(),
+            ];
+        }
+
+        return $result;
+    }
 }

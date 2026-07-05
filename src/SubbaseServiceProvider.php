@@ -4,6 +4,8 @@ namespace Nafiswatsiq\Subbase;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\File;
+use Nafiswatsiq\Subbase\Console\Commands\SubbaseUpgradeCommand;
+use Nafiswatsiq\Subbase\Models\Discount;
 use Nafiswatsiq\Subbase\Models\Feature;
 use Nafiswatsiq\Subbase\Models\Plan;
 use Nafiswatsiq\Subbase\Models\Subscription;
@@ -21,6 +23,9 @@ class SubbaseServiceProvider extends PackageServiceProvider
             ->hasConfigFile('subbase')
             ->hasTranslations()
             ->hasViews()
+            ->hasCommands([
+                SubbaseUpgradeCommand::class,
+            ])
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command
                     ->startWith(function (Command $artisanCommand): void {
@@ -37,6 +42,7 @@ class SubbaseServiceProvider extends PackageServiceProvider
                         $migrations = [
                             'add_prices_to_plans_table.php',
                             'add_featured_to_plans_table.php',
+                            'create_discounts_table.php',
                         ];
 
                         foreach ($migrations as $migration) {
@@ -84,11 +90,13 @@ class SubbaseServiceProvider extends PackageServiceProvider
             'laravel-subscriptions.tables.features' => config('subbase.tables.features', 'features'),
             'laravel-subscriptions.tables.subscriptions' => config('subbase.tables.subscriptions', 'subscriptions'),
             'laravel-subscriptions.tables.subscription_usage' => config('subbase.tables.subscription_usage', 'subscription_usage'),
+            'laravel-subscriptions.tables.discounts' => config('subbase.tables.discounts', 'discounts'),
 
             'laravel-subscriptions.models.plan' => config('subbase.models.plan', Plan::class),
             'laravel-subscriptions.models.feature' => config('subbase.models.feature', Feature::class),
             'laravel-subscriptions.models.subscription' => config('subbase.models.subscription', Subscription::class),
             'laravel-subscriptions.models.subscription_usage' => config('subbase.models.subscription_usage', SubscriptionUsage::class),
+            'laravel-subscriptions.models.discount' => config('subbase.models.discount', Discount::class),
         ]);
     }
 }

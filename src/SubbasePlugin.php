@@ -6,6 +6,7 @@ use Filament\Contracts\Plugin;
 use Filament\Panel;
 use Nafiswatsiq\Subbase\Filament\Resources\Plans\PlanResource;
 use Nafiswatsiq\Subbase\Filament\Resources\Subscriptions\SubscriptionResource;
+use Nafiswatsiq\Subbase\Filament\Resources\Discounts\DiscountResource;
 
 class SubbasePlugin implements Plugin
 {
@@ -19,6 +20,7 @@ class SubbasePlugin implements Plugin
         $panel->resources([
             PlanResource::class,
             SubscriptionResource::class,
+            DiscountResource::class,
         ]);
     }
 

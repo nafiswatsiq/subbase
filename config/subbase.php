@@ -167,11 +167,13 @@ return [
         'features' => 'features',
         'subscriptions' => 'subscriptions',
         'subscription_usage' => 'subscription_usage',
+        'discounts' => 'discounts',
     ],
 
     'permissions' => [
         'plan' => null,
         'subscription' => null,
+        'discount' => null,
     ],
 
     'models' => [
@@ -180,5 +182,6 @@ return [
         'feature' => Feature::class,
         'subscription' => Subscription::class,
         'subscription_usage' => SubscriptionUsage::class,
+        'discount' => \Nafiswatsiq\Subbase\Models\Discount::class,
     ],
 ];

@@ -18,7 +18,8 @@ Advanced subscription management system for Laravel with Filament admin panel in
 - 💰 **Multi-Currency Pricing** - Support for multiple currencies per plan
 - 📅 **Subscription Lifecycle** - Full subscription state management (trial, active, canceled, expired)
 - 🎯 **Feature-Based Billing** - Assign features to plans with usage tracking
-- 🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
+- �️ **Discounts & Promo Codes** - Percentage or fixed-amount discounts with validation, usage limits, and plan targeting
+- �🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
 - 🎨 **Filament Integration** - Beautiful admin interface with Filament v5
 - ⚙️ **Custom Models** - Use your own models extending base subscription models
 - 🔐 **Optional Role Permission** - Works with `spatie/laravel-permission` when installed, but still works without it
@@ -44,6 +45,29 @@ composer require nafiswatsiq/subbase
 php artisan subbase:install
 php artisan migrate
 ```
+
+### Upgrading an Existing Installation
+
+When updating to a newer version, use the upgrade command instead of `subbase:install`:
+
+```bash
+composer require nafiswatsiq/subbase:^x.x
+
+# Publish only new migrations (safe, never overwrites existing)
+php artisan subbase:upgrade --migrations
+
+# Force overwrite config and views to latest version
+php artisan subbase:upgrade --force
+
+# Selectively upgrade specific assets
+php artisan subbase:upgrade --config   # config only
+php artisan subbase:upgrade --views    # views only
+
+# Run new migrations
+php artisan migrate
+```
+
+> **Note:** `php artisan subbase:install` and `vendor:publish` skip files that already exist. Use `subbase:upgrade --force` to overwrite them with the latest version.
 
 ### 3. Add Subscriptions to User model
 
@@ -176,7 +200,103 @@ $currencies = $plan->getAvailableCurrencies(); // ['USD', 'IDR', 'EUR']
 $plan->setPriceForCurrency('EUR', 15.99)->save();
 ```
 
-### 2. Featured Plans
+### 2. Discount & Promo Codes
+Subbase includes a comprehensive discount engine for creating promo codes, seasonal offers, and pricing discounts. Supports percentage-based and fixed-amount discounts with full validation, usage limits, and plan/feature targeting.
+
+**Admin Panel** — A full Filament resource is available at `/admin/discounts` to manage discounts.
+
+**Usage Examples:**
+
+```php
+use Nafiswatsiq\Subbase\Models\Discount;
+
+// Find a discount by code
+$discount = Discount::findByCode('NEWYEAR50');
+
+// Check if a discount is currently valid (active, within date range, under usage limit)
+if ($discount->isValid()) {
+    // Calculate discounted price
+    $discountedAmount = $discount->calculateDiscount(100.00); // $50.00 (50% off)
+}
+
+// Check if discount applies to a specific plan
+$applies = $discount->appliesToPlan($plan->getKey());
+
+// Check if discount applies to a specific feature
+$applies = $discount->appliesToFeature($feature->getKey());
+
+// Get a human-readable value (e.g., "50%" or "USD 50.00")
+echo $discount->getFormattedValue();
+
+// Increment usage counter after successful application
+$discount->markUsed();
+```
+
+#### Discount Types
+
+| Type | Description | Example |
+|------|-------------|---------|
+| `percentage` | Percentage off the total amount | `10%` = \$10 off \$100 |
+| `fixed` | Fixed amount off | `50.00` = \$50 off any amount |
+
+#### Discount Configuration Fields
+
+| Field | Description |
+|-------|-------------|
+| `name` | Internal name for the discount |
+| `code` | Unique promo code used during checkout |
+| `type` | `percentage` or `fixed` |
+| `value` | The discount amount/percentage value |
+| `currency` | Optional currency restriction (e.g., `USD`, `IDR`) |
+| `min_amount` | Minimum order amount required |
+| `max_uses` | Maximum number of times the code can be used |
+| `is_active` | Enable/disable the discount |
+| `starts_at` | Schedule the discount to start at a specific date |
+| `expires_at` | Set an expiry date for the discount |
+| `applies_to` | Restrict to `plans`, `features`, or both |
+| `applicable_plans` | Array of specific plan IDs the discount applies to |
+| `applicable_features` | Array of specific feature IDs the discount applies to |
+
+#### Pricing Helper with Discounts
+
+The `PlanPriceHelper` integrates with the discount engine to resolve pricing with active discounts:
+
+```php
+use Nafiswatsiq\Subbase\Helpers\PlanPriceHelper;
+
+// Resolve price with the best matching discount (highest priority)
+$result = PlanPriceHelper::resolveWithDiscounts($plan, 'USD');
+
+// Returns: ['original' => 99.00, 'discounted' => 49.50, 'hasDiscount' => true, ...]
+
+// Format prices with discount info for display
+$formatted = PlanPriceHelper::formatWithDiscounts($plan, 'USD');
+
+// Returns: ['formatted_original' => '$99.00', 'formatted_discounted' => '$49.50', ...]
+```
+
+#### Frontend Display
+
+The built-in `plan-list` component automatically detects active discounts and displays:
+- A **discount badge** on applicable plans
+- The **original price** (strikethrough)
+- The **discounted price** in the correct currency format
+
+No additional configuration is needed — discounts are automatically resolved and displayed when viewing the pricing table.
+
+#### Database Migrations
+
+The discount feature adds the following tables:
+- `discounts` — Main discounts table
+- `discount_plan` — Pivot table linking discounts to plans
+- `discount_subscription` — Tracks which discounts were applied to which subscriptions
+
+Run the migration:
+```bash
+php artisan migrate
+```
+
+### 3. Featured Plans
 You can mark specific plans as "Featured" (your most popular plan). 
 To easily retrieve only the featured plans in your application, you can use the `featured` attribute:
 
@@ -227,6 +347,7 @@ php artisan vendor:publish --tag="subbase-views"
 Translations are organized in `resources/lang/{locale}/subbase/`:
 - `plan.php` - Plan-related labels
 - `subscription.php` - Subscription-related labels
+- `discount.php` - Discount-related labels
 
 Override by publishing translations:
 
@@ -237,7 +358,8 @@ php artisan vendor:publish --tag="subbase-translations"
 ## Support
 
 - 📖 Documentation: [GitHub Wiki](https://github.com/nafiswatsiq/subbase/wiki)
-- 🐛 Issues: [GitHub Issues](https://github.com/nafiswatsiq/subbase/issues)
+- � Discount Feature Docs: [docs/discount-feature.md](docs/discount-feature.md)
+- �🐛 Issues: [GitHub Issues](https://github.com/nafiswatsiq/subbase/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/nafiswatsiq/subbase/discussions)
 
 ## License
