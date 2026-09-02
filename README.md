@@ -19,7 +19,7 @@ Advanced subscription management system for Laravel with Filament admin panel in
 - 💰 **Multi-Currency Pricing** - Support for multiple currencies per plan
 - 📅 **Subscription Lifecycle** - Full subscription state management (trial, active, canceled, expired)
 - 🎯 **Feature-Based Billing** - Assign features to plans with usage tracking
-- $ **Discounts & Promo Codes** - Percentage or fixed-amount discounts with validation, usage limits, and plan targeting
+- 💹 **Discounts & Promo Codes** - Percentage or fixed-amount discounts with validation, usage limits, and plan targeting
 - 🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
 - 🎨 **Filament Integration** - Beautiful admin interface with Filament v5
 - ⚙️ **Custom Models** - Use your own models extending base subscription models
@@ -359,7 +359,6 @@ php artisan vendor:publish --tag="subbase-translations"
 ## Support
 
 - 📖 Documentation: [GitHub Wiki](https://github.com/nafiswatsiq/subbase/wiki)
-- $ Discount Feature Docs: [docs/discount-feature.md](docs/discount-feature.md)
 - 🐛 Issues: [GitHub Issues](https://github.com/nafiswatsiq/subbase/issues)
 - 💬 Discussions: [GitHub Discussions](https://github.com/nafiswatsiq/subbase/discussions)
 
