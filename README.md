@@ -316,14 +316,24 @@ Subbase includes a modern, reusable Blade component built with Tailwind CSS to d
 To use the pricing table in any of your Blade views, simply include the component:
 
 ```blade
-<!-- You can also provide a custom route name for the subscribe button -->
-<x-subbase::plan-list subscribe-route="your.custom.checkout.route" />
+<x-subbase::plan-list />
 ```
+
+When `nafiswatsiq/subbase-payment` is installed, the component automatically
+uses its `subbase-payment.checkout` route. Do not pass a placeholder route name
+such as `your.custom.checkout.route`; Laravel will throw a
+`RouteNotFoundException` if that route has not been registered.
+
+To use your own checkout route, define it first and pass its route name:
+
 ```php
-// Example Route
 Route::get('subscribe/{plan}', function ($plan) {
-    dd($plan);
+    return view('subscribe', compact('plan'));
 })->name('your.custom.checkout.route');
+```
+
+```blade
+<x-subbase::plan-list subscribe-route="your.custom.checkout.route" />
 ```
 
 ### Component Features
@@ -333,7 +343,8 @@ Route::get('subscribe/{plan}', function ($plan) {
 - Translatable using Laravel's built-in localization.
 - Responsive design tailored for modern web applications.
 - Built-in tabs for filtering plans by invoice interval (monthly, yearly, etc).
-- **Customizable Action Route**: Pass `subscribe-route` prop to direct users to your custom checkout flow.
+- **Payment Checkout**: Uses `subbase-payment.checkout` automatically when the payment package is installed.
+- **Customizable Action Route**: Pass `subscribe-route` with a registered route name to direct users to your custom checkout flow.
 
 ### Publishing the Component
 If you need to customize the look and feel of the pricing table, you can publish the view file to your application. This will copy the Blade file to `resources/views/vendor/subbase/components/plan-list.blade.php`.
