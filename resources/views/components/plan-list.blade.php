@@ -74,6 +74,8 @@
 
                         if ($subscribeRoute) {
                             $subscribeUrl = route($subscribeRoute, ['plan' => $plan->slug]);
+                        } elseif (\Illuminate\Support\Facades\Route::has('subbase-payment.checkout')) {
+                            $subscribeUrl = route('subbase-payment.checkout', ['plan' => $plan->slug]);
                         } else {
                             $subscribeUrl = \Illuminate\Support\Facades\Route::has('subbase.subscribe')
                                 ? route('subbase.subscribe', ['plan' => $plan->slug])
