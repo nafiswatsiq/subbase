@@ -1,4 +1,4 @@
-<img src="./.github/resources/banner.jpg" alt="header" class="filament-hidden" />
+<img src="./.github/resources/banner-subbase.jpg" alt="header" class="filament-hidden" />
 
 # Subbase - Filament Subscription Management Plugin
 
