@@ -11,7 +11,9 @@
 <img src="./.github/resources/subscriber.png" alt="Screenshot" class="" />
 <img src="./.github/resources/discount.png" alt="Screenshot" class="" />
 
-Advanced subscription management system for Laravel with Filament admin panel integration. Built on top of [`laravelcm/laravel-subscriptions`](https://github.com/laravelcm/laravel-subscriptions) with multi-currency support, optional role/permission support, and custom model flexibility.
+Subbase adds a Filament admin panel and flexible pricing tools to
+[`laravelcm/laravel-subscriptions`](https://github.com/laravelcm/laravel-subscriptions).
+It supports multi-currency plans, discounts, translations, and custom models.
 
 ## Features
 
@@ -34,45 +36,17 @@ Advanced subscription management system for Laravel with Filament admin panel in
 
 ## Installation
 
-### 1. Install via Composer
+### 1. Install the package
 
 ```bash
 composer require nafiswatsiq/subbase
-```
-
-### 2. Publish Config & Migrations
-
-```bash
 php artisan subbase:install
 php artisan migrate
 ```
 
-### Upgrading an Existing Installation
+### 2. Add subscriptions to your User model
 
-When updating to a newer version, use the upgrade command instead of `subbase:install`:
-
-```bash
-composer require nafiswatsiq/subbase:^x.x
-
-# Publish only new migrations (safe, never overwrites existing)
-php artisan subbase:upgrade --migrations
-
-# Force overwrite config and views to latest version
-php artisan subbase:upgrade --force
-
-# Selectively upgrade specific assets
-php artisan subbase:upgrade --config   # config only
-php artisan subbase:upgrade --views    # views only
-
-# Run new migrations
-php artisan migrate
-```
-
-> **Note:** `php artisan subbase:install` and `vendor:publish` skip files that already exist. Use `subbase:upgrade --force` to overwrite them with the latest version.
-
-### 3. Add Subscriptions to User model
-
-In your User model just use trait like this:
+Add the `HasPlanSubscriptions` trait:
 
 ```php
 namespace App\Models;
@@ -86,9 +60,9 @@ class User extends Authenticatable
 }
 ```
 
-### 4. Register Plugin in Filament Panel
+### 3. Register the Filament plugin
 
-In your `app/Providers/Filament/AdminPanelProvider.php`:
+Add `SubbasePlugin` to your panel provider:
 
 ```php
 use Nafiswatsiq\Subbase\SubbasePlugin;
@@ -104,35 +78,41 @@ class AdminPanelProvider extends PanelProvider
 }
 ```
 
-### 5. Register Service Provider (optional, auto-discovered)
-
-The service provider is auto-discovered via `composer.json` extra field. If auto-discovery is disabled, add manually in `bootstrap/providers.php`:
+The service provider is auto-discovered. If auto-discovery is disabled, add it
+to `bootstrap/providers.php`:
 
 ```php
 Nafiswatsiq\Subbase\SubbaseServiceProvider::class,
 ```
 
+### Upgrading
+
+Use the upgrade command when updating an existing installation:
+
+```bash
+composer update nafiswatsiq/subbase
+php artisan subbase:upgrade --migrations
+php artisan migrate
+```
+
+Use `php artisan subbase:upgrade --config`, `--views`, or `--force` when you
+need to republish those assets.
+
 ## Configuration
 
-### Default Configuration
-
-Publish config file:
+Publish the configuration when you need to customize defaults:
 
 ```bash
 php artisan vendor:publish --tag="subbase-config"
 ```
 
-Edit `config/subbase.php` to customize:
-- Default currency
-- Locale to currency mapping
-- Language locale mapping
-- Subscription table names
-- Model bindings (for custom models)
-- Optional permission strings
+The main options in `config/subbase.php` are default currency, locale
+mapping, table names, model bindings, and permissions.
 
-### Optional Role Permission Integration
+### Permissions
 
-If your app installs `spatie/laravel-permission`, you can control access to the plugin with permission names in `config/subbase.php`:
+Spatie permission support is optional. When it is installed, configure resource
+permissions like this:
 
 ```php
 'permissions' => [
@@ -143,11 +123,11 @@ If your app installs `spatie/laravel-permission`, you can control access to the 
 ```
 
 Behavior:
-- If `spatie/laravel-permission` is installed, Filament resource access follows those permission strings.
-- If it is not installed, the plugin remains fully usable and permissions are ignored.
-- If the permission value is left empty, Subbase falls back to Shield-style names such as `ViewAny:Plan` and `ViewAny:Subscription` for the built-in resources.
+- With Spatie installed, resources use the configured permission names.
+- Without Spatie, the plugin remains usable and permissions are ignored.
+- Empty values use Shield-style names such as `ViewAny:Plan`.
 
-### Custom Models
+### Custom models
 
 Override default models in `config/subbase.php`:
 
@@ -164,154 +144,60 @@ Ensure your custom models extend the base models from `nafiswatsiq/subbase`.
 
 ## Core Subscription Usage
 
-Subbase uses `laravelcm/laravel-subscriptions` under the hood to handle all core subscription logic (subscribing, canceling, checking features, swapping plans, etc.).
+Subbase uses `laravelcm/laravel-subscriptions` for subscribing, canceling,
+feature checks, plan swaps, and other subscription operations. See the
+[upstream documentation](https://github.com/laravelcm/laravel-subscriptions)
+for the complete User model API.
 
-For complete documentation on how to use the underlying subscription methods on your User model, please refer to the official repository:
-👉 [laravelcm/laravel-subscriptions on GitHub](https://github.com/laravelcm/laravel-subscriptions)
+## Feature Reference
 
-## New Subbase Features
+### Multi-currency pricing
 
-Subbase adds several powerful features on top of the base package:
+Plans can store prices for multiple ISO 4217 currencies. Use the Filament
+form or the Plan API:
 
-### 1. Multi-Currency Pricing
-Plans in Subbase can store prices for multiple currencies natively. Use the built-in Filament panel to set prices for `USD`, `EUR`, `IDR`, etc. The pricing component will automatically display the correct currency based on your `subbase.php` locale mappings.
-
-**Usage Examples:**
 ```php
 use Nafiswatsiq\Subbase\Models\Plan;
 
 $plan = Plan::first();
-
-// Retrieve price for a specific currency
 $priceInUSD = $plan->getPriceForCurrency('USD');
-
-// Retrieve price automatically based on application locale (e.g., 'en-US' mapped to 'USD')
-// Returns the base price if the currency is not set
 $priceForLocale = $plan->getPriceForLocale(app()->getLocale());
-
-// Check if a plan has a price set for a specific currency
-if ($plan->hasCurrencyPrice('EUR')) {
-    // ...
-}
-
-// Get all currencies configured for the plan
-$currencies = $plan->getAvailableCurrencies(); // ['USD', 'IDR', 'EUR']
-
-// Programmatically set a price for a currency
 $plan->setPriceForCurrency('EUR', 15.99)->save();
 ```
 
-### 2. Discount & Promo Codes
-Subbase includes a comprehensive discount engine for creating promo codes, seasonal offers, and pricing discounts. Supports percentage-based and fixed-amount discounts with full validation, usage limits, and plan/feature targeting.
+### Discounts and promo codes
 
-**Admin Panel** — A full Filament resource is available at `/admin/discounts` to manage discounts.
-
-**Usage Examples:**
+Manage discounts from the Filament resource at `/admin/discounts`. Discounts
+can be percentage-based or fixed amounts, with optional dates, usage limits,
+currency restrictions, and plan targeting.
 
 ```php
 use Nafiswatsiq\Subbase\Models\Discount;
 
-// Find a discount by code
 $discount = Discount::findByCode('NEWYEAR50');
-
-// Check if a discount is currently valid (active, within date range, under usage limit)
 if ($discount->isValid()) {
-    // Calculate discounted price
-    $discountedAmount = $discount->calculateDiscount(100.00); // $50.00 (50% off)
+    $discountedAmount = $discount->calculateDiscount(100.00);
 }
-
-// Check if discount applies to a specific plan
-$applies = $discount->appliesToPlan($plan->getKey());
-
-// Check if discount applies to a specific feature
-$applies = $discount->appliesToFeature($feature->getKey());
-
-// Get a human-readable value (e.g., "50%" or "USD 50.00")
-echo $discount->getFormattedValue();
-
-// Increment usage counter after successful application
 $discount->markUsed();
 ```
 
-#### Discount Types
+### Featured plans
 
-| Type | Description | Example |
-|------|-------------|---------|
-| `percentage` | Percentage off the total amount | `10%` = \$10 off \$100 |
-| `fixed` | Fixed amount off | `50.00` = \$50 off any amount |
-
-#### Discount Configuration Fields
-
-| Field | Description |
-|-------|-------------|
-| `name` | Internal name for the discount |
-| `code` | Unique promo code used during checkout |
-| `type` | `percentage` or `fixed` |
-| `value` | The discount amount/percentage value |
-| `currency` | Optional currency restriction (e.g., `USD`, `IDR`) |
-| `min_amount` | Minimum order amount required |
-| `max_uses` | Maximum number of times the code can be used |
-| `is_active` | Enable/disable the discount |
-| `starts_at` | Schedule the discount to start at a specific date |
-| `expires_at` | Set an expiry date for the discount |
-| `applies_to` | Restrict to `plans`, `features`, or both |
-| `applicable_plans` | Array of specific plan IDs the discount applies to |
-| `applicable_features` | Array of specific feature IDs the discount applies to |
-
-#### Pricing Helper with Discounts
-
-The `PlanPriceHelper` integrates with the discount engine to resolve pricing with active discounts:
-
-```php
-use Nafiswatsiq\Subbase\Helpers\PlanPriceHelper;
-
-// Resolve price with the best matching discount (highest priority)
-$result = PlanPriceHelper::resolveWithDiscounts($plan, 'USD');
-
-// Returns: ['original' => 99.00, 'discounted' => 49.50, 'hasDiscount' => true, ...]
-
-// Format prices with discount info for display
-$formatted = PlanPriceHelper::formatWithDiscounts($plan, 'USD');
-
-// Returns: ['formatted_original' => '$99.00', 'formatted_discounted' => '$49.50', ...]
-```
-
-#### Frontend Display
-
-The built-in `plan-list` component automatically detects active discounts and displays:
-- A **discount badge** on applicable plans
-- The **original price** (strikethrough)
-- The **discounted price** in the correct currency format
-
-No additional configuration is needed — discounts are automatically resolved and displayed when viewing the pricing table.
-
-#### Database Migrations
-
-The discount feature adds the following tables:
-- `discounts` — Main discounts table
-- `discount_plan` — Pivot table linking discounts to plans
-- `discount_subscription` — Tracks which discounts were applied to which subscriptions
-
-Run the migration:
-```bash
-php artisan migrate
-```
-
-### 3. Featured Plans
-You can mark specific plans as "Featured" (your most popular plan). 
-To easily retrieve only the featured plans in your application, you can use the `featured` attribute:
+Mark a plan as featured to highlight it in the pricing component:
 
 ```php
 use Nafiswatsiq\Subbase\Models\Plan;
 
 $plan = Plan::active()->first();
-$plan->featured;
+if ($plan->featured) {
+    // Highlight this plan.
+}
 ```
 
-## Frontend Components
+## Pricing Component
 <img src="./.github/resources/plans-component-v2.png" alt="Screenshot" class="" />
 
-Subbase includes a modern, reusable Blade component built with Tailwind CSS to display pricing plans on your frontend. 
+Use the reusable Blade component to display active plans and features:
 
 To use the pricing table in any of your Blade views, simply include the component:
 
@@ -320,9 +206,8 @@ To use the pricing table in any of your Blade views, simply include the componen
 ```
 
 When `nafiswatsiq/subbase-payment` is installed, the component automatically
-uses its `subbase-payment.checkout` route. Do not pass a placeholder route name
-such as `your.custom.checkout.route`; Laravel will throw a
-`RouteNotFoundException` if that route has not been registered.
+uses its `subbase-payment.checkout` route. For a custom checkout flow, register
+the route first and pass its name with `subscribe-route`.
 
 To use your own checkout route, define it first and pass its route name:
 
@@ -347,14 +232,10 @@ for gateway installation, checkout configuration, webhooks, and subscription
 activation through `PaymentReceived`.
 
 ### Component Features
-- Automatically fetches active plans and features sorted by `sort_order`.
-- Displays the most popular (featured) plan prominently.
-- Formats prices correctly based on the current application locale and currencies.
-- Translatable using Laravel's built-in localization.
-- Responsive design tailored for modern web applications.
-- Built-in tabs for filtering plans by invoice interval (monthly, yearly, etc).
-- **Payment Checkout**: Uses `subbase-payment.checkout` automatically when the payment package is installed.
-- **Customizable Action Route**: Pass `subscribe-route` with a registered route name to direct users to your custom checkout flow.
+- Fetches active plans and features sorted by `sort_order`.
+- Supports featured plans, locale-aware prices, and invoice interval tabs.
+- Uses the payment checkout route automatically when `subbase-payment` is installed.
+- Supports custom checkout routes through `subscribe-route`.
 
 ### Publishing the Component
 If you need to customize the look and feel of the pricing table, you can publish the view file to your application. This will copy the Blade file to `resources/views/vendor/subbase/components/plan-list.blade.php`.
