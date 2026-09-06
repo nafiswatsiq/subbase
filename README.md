@@ -336,6 +336,16 @@ Route::get('subscribe/{plan}', function ($plan) {
 <x-subbase::plan-list subscribe-route="your.custom.checkout.route" />
 ```
 
+## Optional Payment Integration
+
+For hosted checkout and payment gateway support, install the companion
+[`nafiswatsiq/subbase-payment`](https://github.com/nafiswatsiq/subbase-payment)
+package. It integrates directly with Subbase plans and the `plan-list` component.
+
+[Read the Subbase Payment documentation](https://github.com/nafiswatsiq/subbase-payment#readme)
+for gateway installation, checkout configuration, webhooks, and subscription
+activation through `PaymentReceived`.
+
 ### Component Features
 - Automatically fetches active plans and features sorted by `sort_order`.
 - Displays the most popular (featured) plan prominently.
