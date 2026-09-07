@@ -6,6 +6,7 @@ namespace Nafiswatsiq\Subbase\Policies;
 
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Nafiswatsiq\Subbase\Models\Discount;
+use Nafiswatsiq\Subbase\Support\SubbasePermission;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class DiscountPolicy
@@ -14,62 +15,61 @@ class DiscountPolicy
     
     public function viewAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ViewAny:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'viewAny', Discount::class);
     }
 
     public function view(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('View:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'view', Discount::class);
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return $authUser->can('Create:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'create', Discount::class);
     }
 
     public function update(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('Update:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'update', Discount::class);
     }
 
     public function delete(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('Delete:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'delete', Discount::class);
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('DeleteAny:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'deleteAny', Discount::class);
     }
 
     public function restore(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('Restore:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'restore', Discount::class);
     }
 
     public function forceDelete(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('ForceDelete:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'forceDelete', Discount::class);
     }
 
     public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ForceDeleteAny:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'forceDeleteAny', Discount::class);
     }
 
     public function restoreAny(AuthUser $authUser): bool
     {
-        return $authUser->can('RestoreAny:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'restoreAny', Discount::class);
     }
 
     public function replicate(AuthUser $authUser, Discount $discount): bool
     {
-        return $authUser->can('Replicate:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'replicate', Discount::class);
     }
 
     public function reorder(AuthUser $authUser): bool
     {
-        return $authUser->can('Reorder:Discount');
+        return SubbasePermission::allows(config('subbase.permissions.discount'), 'reorder', Discount::class);
     }
-
 }

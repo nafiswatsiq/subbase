@@ -6,6 +6,7 @@ namespace Nafiswatsiq\Subbase\Policies;
 
 use Illuminate\Foundation\Auth\User as AuthUser;
 use Nafiswatsiq\Subbase\Models\Subscription;
+use Nafiswatsiq\Subbase\Support\SubbasePermission;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class SubscriptionPolicy
@@ -14,62 +15,61 @@ class SubscriptionPolicy
     
     public function viewAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ViewAny:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'viewAny', Subscription::class);
     }
 
     public function view(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('View:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'view', Subscription::class);
     }
 
     public function create(AuthUser $authUser): bool
     {
-        return $authUser->can('Create:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'create', Subscription::class);
     }
 
     public function update(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('Update:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'update', Subscription::class);
     }
 
     public function delete(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('Delete:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'delete', Subscription::class);
     }
 
     public function deleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('DeleteAny:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'deleteAny', Subscription::class);
     }
 
     public function restore(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('Restore:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'restore', Subscription::class);
     }
 
     public function forceDelete(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('ForceDelete:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'forceDelete', Subscription::class);
     }
 
     public function forceDeleteAny(AuthUser $authUser): bool
     {
-        return $authUser->can('ForceDeleteAny:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'forceDeleteAny', Subscription::class);
     }
 
     public function restoreAny(AuthUser $authUser): bool
     {
-        return $authUser->can('RestoreAny:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'restoreAny', Subscription::class);
     }
 
     public function replicate(AuthUser $authUser, Subscription $subscription): bool
     {
-        return $authUser->can('Replicate:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'replicate', Subscription::class);
     }
 
     public function reorder(AuthUser $authUser): bool
     {
-        return $authUser->can('Reorder:Subscription');
+        return SubbasePermission::allows(config('subbase.permissions.subscription'), 'reorder', Subscription::class);
     }
-
 }
