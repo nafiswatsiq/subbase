@@ -258,6 +258,9 @@ Override by publishing translations:
 php artisan vendor:publish --tag="subbase-translations"
 ```
 
+---
+[![Buy Me a Coffee](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/nafiswatsiq)
+
 ## Support
 
 - 📖 Documentation: [GitHub Wiki](https://github.com/nafiswatsiq/subbase/wiki)
