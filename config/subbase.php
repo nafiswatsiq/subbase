@@ -22,6 +22,8 @@ return [
 
     'default_currency' => 'USD',
 
+    'theme' => env('SUBBASE_THEME', 'default'),
+
     'locale_currency_map' => [
         'af' => 'ZAR', // Afrikaans (South Africa)
         'ar' => 'SAR', // Arabic (Saudi Arabia)
