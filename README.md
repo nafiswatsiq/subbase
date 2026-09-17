@@ -22,7 +22,8 @@ It supports multi-currency plans, discounts, translations, and custom models.
 - 📅 **Subscription Lifecycle** - Full subscription state management (trial, active, canceled, expired)
 - 🎯 **Feature-Based Billing** - Assign features to plans with usage tracking
 - 💹 **Discounts & Promo Codes** - Percentage or fixed-amount discounts with validation, usage limits, and plan targeting
-- 🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
+- � **Multi-Theme Support** - 6 built-in UI themes (`default`, `neo-brutalism`, `glassmorphism`, `claymorphism`, `cyberpunk`, `maximalism`) with CLI management and dynamic view resolution
+- �🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
 - 🎨 **Filament Integration** - Beautiful admin interface with Filament v5
 - ⚙️ **Custom Models** - Use your own models extending base subscription models
 - 🔐 **Optional Role Permission** - Works with `spatie/laravel-permission` when installed, but still works without it
@@ -244,6 +245,47 @@ Run the following command:
 ```bash
 php artisan vendor:publish --tag="subbase-views"
 ```
+
+## Multi-Theme Support
+
+Subbase includes 6 built-in UI themes for pricing tables and checkout views:
+
+- `default` — Clean, modern Tailwind CSS design.
+- `neo-brutalism` — High-contrast borders, solid box shadows, and retro typography.
+- `glassmorphism` — Dark mode with soft backdrop blurs and glowing gradients.
+- `claymorphism` — Soft 3D floating cards with tactile inner shadows.
+- `cyberpunk` — Neon yellow accents, dark grid backdrop, and monospace terminal styling.
+- `maximalism` — Vibrant color blocking, bold badges, and expressive layout.
+
+### Configuring Active Theme
+
+Set your active theme in `.env`:
+
+```env
+SUBBASE_THEME=neo-brutalism
+```
+
+Or configure `'theme'` in `config/subbase.php`:
+
+```php
+'theme' => env('SUBBASE_THEME', 'default'),
+```
+
+### Theme CLI Commands
+
+List available themes and current configuration:
+
+```bash
+php artisan subbase:theme-list
+```
+
+Install or publish assets for a theme:
+
+```bash
+php artisan subbase:theme-install neo-brutalism --publish
+```
+
+Use `--force` to overwrite published views when republishing.
 
 ## Multi-Language Support
 
