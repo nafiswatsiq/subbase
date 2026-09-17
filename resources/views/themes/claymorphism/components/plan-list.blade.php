@@ -1,10 +1,21 @@
 @props([
-    'plans',
+    'plans' => null,
     'period' => 'monthly',
     'locale' => null,
+    'subscribeRoute' => null,
 ])
 
 @php
+    if (!isset($plans) || $plans === null) {
+        try {
+            $plans = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class)::active()
+                ->with(['features', 'discounts'])
+                ->orderBy('sort_order')
+                ->get();
+        } catch (\Throwable $e) {
+            $plans = collect();
+        }
+    }
     $currentLocale = $locale ?? app()->getLocale();
     $planModel = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class);
     $currency = $planModel::currencyFromLocale($currentLocale);

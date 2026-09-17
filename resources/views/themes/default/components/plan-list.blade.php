@@ -11,10 +11,14 @@
         return $trans === $key ? $default : $trans;
     };
 
-    $plans = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class)::active()
-        ->with(['features', 'discounts'])
-        ->orderBy('sort_order')
-        ->get();
+    try {
+        $plans = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class)::active()
+            ->with(['features', 'discounts'])
+            ->orderBy('sort_order')
+            ->get();
+    } catch (\Throwable $e) {
+        $plans = collect();
+    }
 
     $intervals = $plans->pluck('invoice_interval')->filter()->unique()->values();
 @endphp
