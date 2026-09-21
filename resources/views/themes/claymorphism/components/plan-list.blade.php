@@ -19,16 +19,21 @@
     $currentLocale = $locale ?? app()->getLocale();
     $planModel = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class);
     $currency = $planModel::currencyFromLocale($currentLocale);
+    $t = function ($key, $default) {
+        $translation = __($key);
+
+        return $translation === $key ? $default : $translation;
+    };
 @endphp
 
 <div class="subbase-plan-list bg-slate-100 py-16 text-slate-800 font-sans">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="text-center">
             <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
-                {{ __('subbase::subbase/frontend.plan_list.title') }}
+                {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
             </h2>
             <p class="mt-4 text-lg font-medium text-slate-600">
-                {{ __('subbase::subbase/frontend.plan_list.subtitle') }}
+                {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
             </p>
         </div>
 
@@ -43,7 +48,7 @@
                 <div class="relative flex flex-col justify-between rounded-3xl p-8 transition-transform hover:-translate-y-1.5 {{ $isFeatured ? 'bg-indigo-50 shadow-[12px_12px_24px_0px_rgba(99,102,241,0.15),-12px_-12px_24px_0px_rgba(255,255,255,1)] border-2 border-indigo-200' : 'bg-slate-50 shadow-[10px_10px_20px_0px_rgba(0,0,0,0.06),-10px_-10px_20px_0px_rgba(255,255,255,0.9)] border border-white' }}">
                     @if($isFeatured)
                         <div class="absolute -top-4 right-6 rounded-full bg-indigo-500 px-4 py-1 text-xs font-bold text-white shadow-[4px_4px_8px_0px_rgba(0,0,0,0.1)]">
-                            {{ __('subbase::subbase/frontend.plan_list.popular_badge') }}
+                            {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }}
                         </div>
                     @endif
 
@@ -70,7 +75,7 @@
 
                     <div class="mt-8">
                         <a href="{{ $checkoutUrl }}" class="block w-full rounded-2xl bg-indigo-600 py-3.5 text-center font-bold text-white shadow-[6px_6px_12px_0px_rgba(99,102,241,0.3),-6px_-6px_12px_0px_rgba(255,255,255,0.8)] transition-all hover:bg-indigo-500 active:shadow-inner">
-                            {{ __('subbase::subbase/frontend.plan_list.subscribe_button') }}
+                            {{ $t('subbase::plan.pricing.subscribe_button', 'Get started') }}
                         </a>
                     </div>
                 </div>

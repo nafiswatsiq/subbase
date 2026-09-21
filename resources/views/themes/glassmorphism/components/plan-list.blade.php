@@ -19,6 +19,11 @@
     $currentLocale = $locale ?? app()->getLocale();
     $planModel = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class);
     $currency = $planModel::currencyFromLocale($currentLocale);
+    $t = function ($key, $default) {
+        $translation = __($key);
+
+        return $translation === $key ? $default : $translation;
+    };
 @endphp
 
 <div class="subbase-plan-list relative overflow-hidden bg-slate-950 py-16 text-white font-sans">
@@ -28,10 +33,10 @@
     <div class="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="text-center">
             <h2 class="text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
-                {{ __('subbase::subbase/frontend.plan_list.title') }}
+                {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
             </h2>
             <p class="mt-4 text-lg text-slate-300">
-                {{ __('subbase::subbase/frontend.plan_list.subtitle') }}
+                {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
             </p>
         </div>
 
@@ -46,7 +51,7 @@
                 <div class="relative flex flex-col justify-between rounded-3xl border border-white/20 bg-white/10 p-8 backdrop-blur-xl shadow-2xl transition-transform hover:-translate-y-1.5 {{ $isFeatured ? 'ring-2 ring-indigo-400 bg-white/15' : '' }}">
                     @if($isFeatured)
                         <div class="absolute -top-4 right-6 rounded-full bg-gradient-to-r from-indigo-500 to-purple-500 px-4 py-1 text-xs font-semibold text-white shadow-lg">
-                            {{ __('subbase::subbase/frontend.plan_list.popular_badge') }}
+                            {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }}
                         </div>
                     @endif
 
@@ -73,7 +78,7 @@
 
                     <div class="mt-8">
                         <a href="{{ $checkoutUrl }}" class="block w-full rounded-2xl bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 py-3.5 text-center font-semibold text-white shadow-lg transition-opacity hover:opacity-90">
-                            {{ __('subbase::subbase/frontend.plan_list.subscribe_button') }}
+                            {{ $t('subbase::plan.pricing.subscribe_button', 'Get started') }}
                         </a>
                     </div>
                 </div>

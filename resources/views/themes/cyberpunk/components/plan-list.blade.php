@@ -19,16 +19,21 @@
     $currentLocale = $locale ?? app()->getLocale();
     $planModel = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class);
     $currency = $planModel::currencyFromLocale($currentLocale);
+    $t = function ($key, $default) {
+        $translation = __($key);
+
+        return $translation === $key ? $default : $translation;
+    };
 @endphp
 
 <div class="subbase-plan-list bg-black py-16 text-yellow-400 font-mono">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="text-center">
             <h2 class="text-4xl font-black uppercase tracking-widest text-yellow-400 drop-shadow-[0_0_10px_rgba(250,204,21,0.8)] sm:text-5xl">
-                // {{ __('subbase::subbase/frontend.plan_list.title') }} \\
+                // {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }} \\
             </h2>
             <p class="mt-4 text-sm font-bold uppercase tracking-wider text-cyan-400">
-                [ {{ __('subbase::subbase/frontend.plan_list.subtitle') }} ]
+                [ {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }} ]
             </p>
         </div>
 
@@ -43,7 +48,7 @@
                 <div class="relative flex flex-col justify-between border-2 border-cyan-400 bg-slate-950 p-8 shadow-[0_0_20px_rgba(6,182,212,0.3)] transition-all hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] {{ $isFeatured ? 'ring-2 ring-fuchsia-500' : '' }}">
                     @if($isFeatured)
                         <div class="absolute -top-3.5 right-4 bg-fuchsia-600 px-3 py-0.5 text-xs font-black uppercase text-white shadow-[0_0_10px_rgba(217,70,239,0.8)]">
-                            ⚡ {{ __('subbase::subbase/frontend.plan_list.popular_badge') }}
+                            ⚡ {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }}
                         </div>
                     @endif
 
