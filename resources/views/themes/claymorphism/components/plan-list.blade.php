@@ -26,13 +26,14 @@
     };
 @endphp
 
-<div class="subbase-plan-list bg-slate-100 py-16 text-slate-800 font-sans">
+<div class="subbase-plan-list bg-[#e9edf5] py-20 text-slate-800 font-sans">
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-        <div class="text-center">
-            <h2 class="text-4xl font-extrabold tracking-tight text-slate-900 sm:text-5xl">
+        <div class="mx-auto max-w-3xl text-center">
+            <p class="mb-4 text-xs font-bold uppercase tracking-[0.3em] text-indigo-500">{{ $t('subbase::plan.pricing.label', 'Pricing') }} / Plans</p>
+            <h2 class="text-4xl font-extrabold leading-tight tracking-tight text-slate-900 sm:text-6xl">
                 {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
             </h2>
-            <p class="mt-4 text-lg font-medium text-slate-600">
+            <p class="mx-auto mt-5 max-w-xl text-base leading-7 text-slate-600 sm:text-lg">
                 {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
             </p>
         </div>
@@ -45,7 +46,7 @@
                     $isFeatured = (bool) ($plan->featured ?? false);
                 @endphp
 
-                <div class="relative flex flex-col justify-between rounded-3xl p-8 transition-transform hover:-translate-y-1.5 {{ $isFeatured ? 'bg-indigo-50 shadow-[12px_12px_24px_0px_rgba(99,102,241,0.15),-12px_-12px_24px_0px_rgba(255,255,255,1)] border-2 border-indigo-200' : 'bg-slate-50 shadow-[10px_10px_20px_0px_rgba(0,0,0,0.06),-10px_-10px_20px_0px_rgba(255,255,255,0.9)] border border-white' }}">
+                <div class="relative flex min-h-[32rem] flex-col justify-between rounded-[2rem] p-7 transition-transform hover:-translate-y-2 {{ $isFeatured ? 'bg-indigo-50 shadow-[14px_14px_28px_0px_rgba(99,102,241,0.15),-14px_-14px_28px_0px_rgba(255,255,255,1)] border-2 border-indigo-200' : 'bg-slate-50 shadow-[12px_12px_24px_0px_rgba(0,0,0,0.06),-12px_-12px_24px_0px_rgba(255,255,255,0.95)] border border-white' }}">
                     @if($isFeatured)
                         <div class="absolute -top-4 right-6 rounded-full bg-indigo-500 px-4 py-1 text-xs font-bold text-white shadow-[4px_4px_8px_0px_rgba(0,0,0,0.1)]">
                             {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }}
@@ -53,17 +54,23 @@
                     @endif
 
                     <div>
-                        <h3 class="text-2xl font-bold text-slate-900">{{ $plan->name }}</h3>
-                        <p class="mt-2 text-sm text-slate-600">{{ $plan->description }}</p>
+                        <div class="flex items-start justify-between gap-4">
+                            <div>
+                                <p class="mb-3 text-[10px] font-bold uppercase tracking-[0.25em] text-indigo-500">Plan {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}</p>
+                                <h3 class="text-2xl font-bold text-slate-900">{{ $plan->name }}</h3>
+                            </div>
+                            <span class="grid h-10 w-10 place-items-center rounded-full bg-indigo-100 text-indigo-600">↗</span>
+                        </div>
+                        <p class="mt-4 min-h-12 text-sm leading-6 text-slate-600">{{ $plan->description }}</p>
 
-                        <div class="mt-6 flex items-baseline gap-2">
+                        <div class="mt-7 flex items-end justify-between gap-2 border-y border-slate-200 py-5">
                             <span class="text-4xl font-black text-slate-900">
                                 {{ $pricing['final_price'] }}
                             </span>
                             <span class="text-sm font-medium text-slate-500">/ {{ $plan->invoice_interval }}</span>
                         </div>
 
-                        <ul class="mt-8 space-y-3 border-t border-slate-200 pt-6">
+                        <ul class="mt-7 space-y-3">
                             @foreach($plan->features as $feature)
                                 <li class="flex items-center gap-3 text-sm text-slate-700">
                                     <span class="flex h-6 w-6 items-center justify-center rounded-full bg-indigo-100 text-indigo-600 font-bold text-xs shadow-inner">✓</span>
