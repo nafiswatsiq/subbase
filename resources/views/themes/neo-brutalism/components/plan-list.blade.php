@@ -53,14 +53,14 @@
 
                         <div class="mt-6 flex items-baseline gap-2">
                             <span class="text-4xl font-black text-black">
-                                {{ $pricing['formatted_final_price'] }}
+                                {{ $pricing['final_price'] }}
                             </span>
                             <span class="text-sm font-bold uppercase text-gray-700">/ {{ $plan->invoice_interval }}</span>
                         </div>
 
-                        @if($pricing['has_discount'])
+                        @if($pricing['discount_info'] !== null)
                             <div class="mt-2 inline-block border-2 border-black bg-pink-300 px-2 py-0.5 text-xs font-black uppercase">
-                                {{ __('subbase::subbase/frontend.plan_list.was') }} {{ $pricing['formatted_original_price'] }}
+                                {{ __('subbase::subbase/frontend.plan_list.was') }} {{ $pricing['original_price'] }}
                             </div>
                         @endif
 

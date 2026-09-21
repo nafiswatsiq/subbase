@@ -53,7 +53,7 @@
 
                         <div class="mt-6 flex items-baseline gap-2 border-b-4 border-black pb-4">
                             <span class="text-5xl font-black">
-                                {{ $pricing['formatted_final_price'] }}
+                                {{ $pricing['final_price'] }}
                             </span>
                             <span class="text-xs font-black uppercase">/ {{ $plan->invoice_interval }}</span>
                         </div>
