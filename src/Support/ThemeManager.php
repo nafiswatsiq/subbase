@@ -11,7 +11,7 @@ class ThemeManager
         'default',
         'neo-brutalism',
         'glassmorphism',
-        'claymorphism',
+        'neumorphism',
         'cyberpunk',
         'maximalism',
     ];

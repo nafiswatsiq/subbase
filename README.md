@@ -22,7 +22,7 @@ It supports multi-currency plans, discounts, translations, and custom models.
 - 📅 **Subscription Lifecycle** - Full subscription state management (trial, active, canceled, expired)
 - 🎯 **Feature-Based Billing** - Assign features to plans with usage tracking
 - 💹 **Discounts & Promo Codes** - Percentage or fixed-amount discounts with validation, usage limits, and plan targeting
-- � **Multi-Theme Support** - 6 built-in UI themes (`default`, `neo-brutalism`, `glassmorphism`, `claymorphism`, `cyberpunk`, `maximalism`) with CLI management and dynamic view resolution
+- 🎨 **Multi-Theme Support** - 6 built-in UI themes (`default`, `neo-brutalism`, `glassmorphism`, `neumorphism`, `cyberpunk`, `maximalism`) with CLI management and dynamic view resolution
 - �🌍 **Multi-Language Support** - Translatable plan names, descriptions, and features
 - 🎨 **Filament Integration** - Beautiful admin interface with Filament v5
 - ⚙️ **Custom Models** - Use your own models extending base subscription models
@@ -206,6 +206,22 @@ To use the pricing table in any of your Blade views, simply include the componen
 <x-subbase::plan-list />
 ```
 
+Customize header text through `label`, `title`, and `subtitle`:
+
+```blade
+<x-subbase::plan-list
+    label="Membership"
+    title="Choose your access level"
+    subtitle="Simple plans with no hidden fees."
+/>
+```
+
+Omitted values keep default text from `subbase::plan.pricing.label`,
+`subbase::plan.pricing.title`, and `subbase::plan.pricing.subtitle`. When
+translations are unavailable, defaults match the default theme: `Pricing`,
+`Simple, transparent pricing`, and `Choose the plan that fits your needs. No
+hidden fees.`
+
 When `nafiswatsiq/subbase-payment` is installed, the component automatically
 uses its `subbase-payment.checkout` route. For a custom checkout flow, register
 the route first and pass its name with `subscribe-route`.
@@ -253,7 +269,7 @@ Subbase includes 6 built-in UI themes for pricing tables and checkout views:
 - `default` — Clean, modern Tailwind CSS design.
 - `neo-brutalism` — High-contrast borders, solid box shadows, and retro typography.
 - `glassmorphism` — Dark mode with soft backdrop blurs and glowing gradients.
-- `claymorphism` — Soft 3D floating cards with tactile inner shadows.
+- `neumorphism` — Soft 3D floating cards with dual drop/inner shadows and sleek light elements.
 - `cyberpunk` — Neon yellow accents, dark grid backdrop, and monospace terminal styling.
 - `maximalism` — Vibrant color blocking, bold badges, and expressive layout.
 

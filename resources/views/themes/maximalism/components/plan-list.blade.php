@@ -1,8 +1,10 @@
 @props([
     'plans' => null,
-    'period' => 'monthly',
     'locale' => null,
     'subscribeRoute' => null,
+    'label' => null,
+    'title' => null,
+    'subtitle' => null,
 ])
 
 @php
@@ -24,30 +26,66 @@
 
         return $translation === $key ? $default : $translation;
     };
+    $tc = function ($key, $number, $default) {
+        $translation = trans_choice($key, $number);
+
+        return $translation === $key ? $default : $translation;
+    };
+
+    $label = $label ?? $t('subbase::plan.pricing.label', 'Pricing');
+    $title = $title ?? $t('subbase::plan.pricing.title', 'Simple, transparent pricing');
+    $subtitle = $subtitle ?? $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.');
+
+    $intervals = $plans->pluck('invoice_interval')->filter()->unique()->values();
 @endphp
 
 <div class="subbase-plan-list relative overflow-hidden bg-[#34135c] py-20 text-white font-sans">
     <div class="pointer-events-none absolute -right-20 top-20 h-56 w-56 rotate-12 border-[18px] border-yellow-300/50"></div>
     <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div class="relative mx-auto max-w-4xl text-center">
-            <p class="mb-5 text-xs font-black uppercase tracking-[0.35em] text-yellow-300">THE SUBBASE COLLECTION / 2025</p>
+            <p class="mb-5 text-xs font-black uppercase tracking-[0.35em] text-yellow-300">{{ $label }}</p>
             <h2 class="inline-block bg-emerald-400 px-6 py-3 text-4xl font-black uppercase leading-none tracking-widest text-black rotate-1 sm:text-6xl shadow-[7px_7px_0px_0px_rgba(255,255,255,1)]">
-                {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
+                {{ $title }}
             </h2>
             <p class="mx-auto mt-7 max-w-2xl text-lg font-black uppercase leading-7 text-pink-300 sm:text-2xl">
-                {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
+                {{ $subtitle }}
             </p>
         </div>
 
-        <div class="relative mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+        @if($plans->isEmpty())
+            <div class="relative mt-16 border-4 border-black bg-white p-10 text-center text-sm font-black uppercase text-black shadow-[8px_8px_0px_0px_rgba(52,211,153,1)]">
+                {{ $t('subbase::plan.pricing.no_plans', 'No active plans available at the moment.') }}
+            </div>
+        @else
+            @if($intervals->count() > 1)
+                <div class="relative mt-16 flex justify-center" role="tablist">
+                    <div class="flex border-4 border-black bg-white p-1 shadow-[5px_5px_0px_0px_rgba(250,204,21,1)]">
+                        @foreach($intervals as $index => $interval)
+                            <button type="button" role="tab" aria-selected="{{ $index === 0 ? 'true' : 'false' }}" data-target-interval="{{ $interval }}" class="interval-tab border-2 border-black px-4 py-2 text-xs font-black uppercase {{ $index === 0 ? 'bg-emerald-400 text-black' : 'bg-white text-black' }}">
+                                {{ $tc("subbase::plan.pricing.interval.{$interval}", 1, ucfirst($interval)) }}
+                            </button>
+                        @endforeach
+                    </div>
+                </div>
+            @endif
+
+        <div class="relative {{ $intervals->count() > 1 ? 'mt-8' : 'mt-16' }} grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
             @foreach($plans as $plan)
                 @php
                     $pricing = \Nafiswatsiq\Subbase\Helpers\PlanPriceHelper::formatWithDiscounts($plan, $currency);
-                    $checkoutUrl = route('subbase-payment.checkout', $plan->slug);
+                    if ($subscribeRoute) {
+                        $checkoutUrl = route($subscribeRoute, ['plan' => $plan->slug]);
+                    } elseif (\Illuminate\Support\Facades\Route::has('subbase-payment.checkout')) {
+                        $checkoutUrl = route('subbase-payment.checkout', ['plan' => $plan->slug]);
+                    } else {
+                        $checkoutUrl = \Illuminate\Support\Facades\Route::has('subbase.subscribe')
+                            ? route('subbase.subscribe', ['plan' => $plan->slug])
+                            : '#';
+                    }
                     $isFeatured = (bool) ($plan->featured ?? false);
                 @endphp
 
-                <div class="relative flex min-h-[32rem] flex-col justify-between border-4 border-black p-7 transition-transform hover:scale-[1.03] {{ $isFeatured ? 'bg-gradient-to-br from-pink-500 to-orange-400 text-black shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] -rotate-1' : 'bg-white text-black shadow-[8px_8px_0px_0px_rgba(52,211,153,1)] rotate-1' }}">
+                <div data-interval="{{ $plan->invoice_interval }}" @if($intervals->count() > 1 && $plan->invoice_interval !== $intervals[0]) style="display: none;" @endif class="plan-card relative flex min-h-[32rem] flex-col justify-between border-4 border-black p-7 transition-transform hover:scale-[1.03] {{ $isFeatured ? 'bg-gradient-to-br from-pink-500 to-orange-400 text-black shadow-[10px_10px_0px_0px_rgba(250,204,21,1)] -rotate-1' : 'bg-white text-black shadow-[8px_8px_0px_0px_rgba(52,211,153,1)] rotate-1' }}">
                     @if($isFeatured)
                         <div class="absolute -top-5 -right-3 border-2 border-black bg-yellow-300 px-4 py-1 text-xs font-black uppercase tracking-widest text-black shadow-[3px_3px_0px_0px_rgba(0,0,0,1)]">
                             ★ {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }} ★
@@ -68,8 +106,19 @@
                             <span class="text-5xl font-black">
                                 {{ $pricing['final_price'] }}
                             </span>
-                            <span class="text-xs font-black uppercase">/ {{ $plan->invoice_interval }}</span>
+                            <span class="text-xs font-black uppercase">/ {{ $plan->invoice_period > 1 ? $plan->invoice_period . ' ' : '' }}{{ $tc("subbase::plan.pricing.interval.{$plan->invoice_interval}", $plan->invoice_period, $plan->invoice_interval) }}</span>
                         </div>
+
+                        @if($pricing['discount_info'] !== null)
+                            <div class="mb-4 flex items-center gap-2">
+                                <span class="text-sm text-black/70 line-through">
+                                    {{ $pricing['original_price'] }}
+                                </span>
+                                <span class="border-2 border-black bg-emerald-400 px-2 py-0.5 text-xs font-black uppercase text-black">
+                                    {{ $pricing['discount_info']['formatted_value'] }} {{ $t('subbase::plan.pricing.off', 'OFF') }}
+                                </span>
+                            </div>
+                        @endif
 
                         <ul class="mt-6 space-y-3">
                             @foreach($plan->features as $feature)
@@ -89,5 +138,25 @@
                 </div>
             @endforeach
         </div>
+        @endif
     </div>
 </div>
+
+@if($intervals->count() > 1)
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const tabs = document.querySelectorAll('.interval-tab');
+        const cards = document.querySelectorAll('.plan-card');
+        tabs.forEach(tab => tab.addEventListener('click', function () {
+            const interval = tab.dataset.targetInterval;
+            tabs.forEach(item => {
+                const active = item.dataset.targetInterval === interval;
+                item.setAttribute('aria-selected', active ? 'true' : 'false');
+                item.classList.toggle('bg-emerald-400', active);
+                item.classList.toggle('bg-white', !active);
+            });
+            cards.forEach(card => card.style.display = card.dataset.interval === interval ? 'flex' : 'none');
+        }));
+    });
+</script>
+@endif

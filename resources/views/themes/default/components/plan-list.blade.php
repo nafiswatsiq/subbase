@@ -1,5 +1,8 @@
 @props([
     'subscribeRoute' => null,
+    'label' => null,
+    'title' => null,
+    'subtitle' => null,
 ])
 @php
     $t = function($key, $default) {
@@ -10,6 +13,10 @@
         $trans = trans_choice($key, $number);
         return $trans === $key ? $default : $trans;
     };
+
+    $label = $label ?? $t('subbase::plan.pricing.label', 'Pricing');
+    $title = $title ?? $t('subbase::plan.pricing.title', 'Simple, transparent pricing');
+    $subtitle = $subtitle ?? $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.');
 
     try {
         $plans = config('subbase.models.plan', \Nafiswatsiq\Subbase\Models\Plan::class)::active()
@@ -30,13 +37,13 @@
         <div class="text-center mb-14">
             <span class="inline-flex items-center gap-1.5 rounded-full bg-blue-50 px-3 py-1 text-xs font-semibold text-blue-600 ring-1 ring-blue-100 mb-4">
                 <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
-                {{ $t('subbase::plan.pricing.label', 'Pricing') }}
+                {{ $label }}
             </span>
             <h2 class="text-4xl font-bold tracking-tight text-gray-900 sm:text-5xl">
-                {{ $t('subbase::plan.pricing.title', 'Simple, transparent pricing') }}
+                {{ $title }}
             </h2>
             <p class="mt-4 text-lg text-gray-500 max-w-xl mx-auto">
-                {{ $t('subbase::plan.pricing.subtitle', 'Choose the plan that fits your needs. No hidden fees.') }}
+                {{ $subtitle }}
             </p>
         </div>
 
@@ -102,8 +109,8 @@
                             <div class="flex items-center justify-between px-6 pt-5 pb-0 gap-2">
                                 <div>
                                     @if($isFeatured)
-                                        <span class="inline-flex items-center gap-1 rounded-full bg-blue-50 px-2.5 py-0.5 text-[10px] font-bold tracking-widest text-blue-600 uppercase ring-1 ring-blue-200">
-                                            <svg class="w-2.5 h-2.5" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+                                        <span class="inline-flex items-center gap-1 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-3 py-1 text-[10px] font-bold tracking-widest text-white uppercase shadow-md">
+                                            <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
                                             {{ $t('subbase::plan.pricing.most_popular', 'Most Popular') }}
                                         </span>
                                     @endif
@@ -190,8 +197,8 @@
                             <a href="{{ $subscribeUrl }}"
                                class="mt-auto flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 text-sm font-semibold transition-all duration-150
                                       {{ $isFeatured
-                                          ? 'bg-blue-500 text-white hover:bg-blue-400 shadow-lg shadow-blue-500/30'
-                                          : 'bg-gray-900 text-white hover:bg-gray-700' }}">
+                                          ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white hover:from-blue-500 hover:to-indigo-500 shadow-lg shadow-blue-500/30'
+                                          : 'bg-gray-900 text-white hover:bg-gray-700 shadow-md' }}">
                                 {{ $t('subbase::plan.pricing.subscribe_button', 'Get started') }}
                                 <svg class="w-4 h-4 transition-transform duration-150 group-hover:translate-x-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
                             </a>
